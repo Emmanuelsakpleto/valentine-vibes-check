@@ -5,6 +5,7 @@ import FormVibe from "@/components/valentine/FormVibe";
 import ProfileResult from "@/components/valentine/ProfileResult";
 import DashboardLive from "@/components/valentine/DashboardLive";
 import { calculateProfile, type Profile } from "@/lib/profiles";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 type Screen = "hook" | "form" | "results";
 
@@ -21,9 +22,6 @@ const Index = () => {
         const parsed = JSON.parse(saved);
         if (parsed.profile) {
           setProfile(parsed.profile);
-          // Verify if answers are needed for Dashboard? 
-          // Currently Dashboard uses Mock Data, so answers are just for Profile calculation.
-          // But good to restore them if we ever use them.
           if (parsed.answers) setAnswers(parsed.answers);
           setScreen("results");
         }
@@ -35,25 +33,49 @@ const Index = () => {
 
   const handleStart = () => setScreen("form");
 
-  const handleFormComplete = (allAnswers: Record<number, number | string>) => {
+  const handleFormComplete = async (allAnswers: Record<number, number | string>) => {
     setAnswers(allAnswers);
     const result = calculateProfile(allAnswers);
     setProfile(result);
     setScreen("results");
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Persist result
+    // Persist locally
     localStorage.setItem("valentine_vibe_result", JSON.stringify({
       profile: result,
       answers: allAnswers
     }));
-  };
 
-  const handleRetake = () => {
-    setAnswers({});
-    setProfile(null);
-    setScreen("hook");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Persist to Supabase if configured
+    if (isSupabaseConfigured()) {
+      try {
+        const { error } = await supabase.from("valentine_responses").insert([{
+          profile_type: result.id,
+          answers: allAnswers,
+          gender: String(allAnswers[1] || ""),
+          age_range: String(allAnswers[2] || ""),
+          country: String(allAnswers[3] || ""),
+          status: String(allAnswers[4] || ""),
+          duration: String(allAnswers[5] || ""),
+          celebrate_attitude: String(allAnswers[6] || ""),
+          importance_level: Number(allAnswers[7] || 0),
+          social_pressure: String(allAnswers[8] || ""),
+          budget_range: String(allAnswers[9] || ""),
+          gift_preference: String(allAnswers[10] || ""),
+          financial_stress: String(allAnswers[12] || ""), // Q11 is Worst Gift (skipped in cols for now)
+          social_influence_level: String(allAnswers[16] || ""),
+          social_network: String(allAnswers[17] || ""),
+        }]);
+
+        if (error) {
+          console.error("Supabase insert error:", error);
+        } else {
+          console.log("Response saved to Supabase!");
+        }
+      } catch (err) {
+        console.error("Supabase connection error:", err);
+      }
+    }
   };
 
   const handleViewDashboard = () => {
@@ -75,7 +97,7 @@ const Index = () => {
             <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 space-y-16">
               <ProfileResult
                 profile={profile}
-                onRetake={handleRetake}
+                onRetake={() => { }} // No-op since button is hidden
                 onViewDashboard={handleViewDashboard}
               />
 

@@ -12,6 +12,8 @@ import {
   Share2,
   Globe,
 } from "lucide-react";
+import { toast } from "sonner";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 // Components
 import DemographicsCharts from "./dashboard/DemographicsCharts";
@@ -128,7 +130,32 @@ const ChartContainer = ({
 );
 
 const DashboardLive = () => {
-  const participantsCount = useAnimatedCounter(12453);
+  const [realtimeCount, setRealtimeCount] = useState(0);
+  const participantsCount = useAnimatedCounter(12453 + realtimeCount);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+
+    // Subscribe to realtime inserts
+    const channel = supabase
+      .channel('valentine_realtime')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'valentine_responses' },
+        (payload) => {
+          setRealtimeCount((c) => c + 1);
+          const country = payload.new.country || "un nouvel endroit";
+          toast("Nouveau profil détecté !", {
+            description: `Quelqu'un vient de participer depuis ${country}.`
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -148,7 +175,7 @@ const DashboardLive = () => {
             L'Observatoire du Love
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            La Saint-Valentin : Romance ou Pression Sociale ? Analyse de 12 453 profils.
+            La Saint-Valentin : Romance ou Pression Sociale ? Analyse de {participantsCount.toLocaleString()} profils.
           </p>
         </div>
 
@@ -156,7 +183,7 @@ const DashboardLive = () => {
           {/* Top Metrics */}
           <MetricCard
             label="Participants"
-            value={participantsCount}
+            value={participantsCount.toLocaleString()}
             change={12}
             trend="up"
             delay={0.1}
