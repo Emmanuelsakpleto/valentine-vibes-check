@@ -24,6 +24,7 @@ import PerceptionCharts from "./dashboard/PerceptionCharts";
 import GiftInsights from "./dashboard/GiftInsights";
 import CorrelationMatrix from "./dashboard/CorrelationMatrix";
 import AdvancedScores from "./dashboard/AdvancedScores";
+import GeminiInsights from "./dashboard/GeminiInsights";
 import { GEO_DATA, DEMOGRAPHICS } from "@/data/dashboardData";
 import GeographicMap from "./dashboard/GeographicMap";
 
@@ -406,41 +407,8 @@ const DashboardLive = () => {
             </ChartContainer>
 
             {/* AI Chat / Insight Feed */}
-            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 h-full min-h-[400px] flex flex-col relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
-              <div className="flex items-center gap-2 mb-4">
-                <Lightbulb className="w-4 h-4 text-primary" />
-                <span className="text-xs font-bold uppercase text-primary">Gemini Live Insights</span>
-              </div>
-
-              <ul className="space-y-4 text-sm text-foreground/80 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">TENDANCE ACTUELLE</p>
-                  "Le budget moyen des <span className="font-medium text-foreground">18-24 ans</span> a augmenté de 15% par rapport à l'année dernière."
-                </li>
-                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">CORRÉLATION DÉTECTÉE</p>
-                  "Forte corrélation (0.8) entre l'utilisation de <span className="font-medium text-foreground">TikTok</span> et le sentiment de pression sociale."
-                </li>
-                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">INSIGHT CADEAUX</p>
-                  "Les hommes sous-estiment l'envie d'expériences (voyages/restos) de 25% par rapport aux femmes."
-                </li>
-                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">DATA GÉOGRAPHIQUE</p>
-                  "<span className="font-medium text-foreground">Paris</span> affiche le 'Love Score' le plus élevé (85/100), mais aussi le budget moyen le plus conséquent (120€)."
-                </li>
-                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">FUN FACT</p>
-                  "42% des célibataires s'offrent leurs propres chocolats. #SelfLove"
-                </li>
-              </ul>
-
-              <div className="mt-4 pt-4 border-t border-primary/10 text-center">
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                  Mise à jour toutes les 5 sec
-                </p>
-              </div>
+            <div className="h-full min-h-[400px]">
+              <GeminiInsights />
             </div>
           </div>
         </div>
