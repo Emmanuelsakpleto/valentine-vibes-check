@@ -181,6 +181,20 @@ export const questions: Question[] = [
     id: 15,
     section: "Difficultés & Réalités",
     sectionEmoji: "Lock",
+    text: "Qui gère l'organisation cette année ?",
+    type: "single",
+    options: [
+      "Tout repose sur moi (charge mentale)",
+      "C'est mon/ma partenaire qui gère",
+      "On organise ensemble",
+      "Improvisation totale",
+      "Rien de prévu",
+    ],
+  },
+  {
+    id: 16,
+    section: "Difficultés & Réalités",
+    sectionEmoji: "Lock",
     text: "Les réseaux sociaux influencent-ils tes attentes ?",
     type: "single",
     options: [
@@ -191,7 +205,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 16,
+    id: 17,
     section: "Difficultés & Réalités",
     sectionEmoji: "Lock",
     text: "Quelle appli a le plus d'impact sur ta vision du couple ?",
@@ -208,21 +222,21 @@ export const questions: Question[] = [
 
   // SECTION 5 — FUN & STORYTELLING
   {
-    id: 17,
+    id: 18,
     section: "Fun & Storytelling",
     sectionEmoji: "PenTool",
     text: "Ton cadeau le plus inattendu reçu (ou offert) ?",
     type: "text",
   },
   {
-    id: 18,
+    id: 19,
     section: "Fun & Storytelling",
     sectionEmoji: "PenTool",
     text: "Raconte ta pire (ou meilleure) expérience Valentine :",
     type: "text",
   },
   {
-    id: 19,
+    id: 20,
     section: "Fun & Storytelling",
     sectionEmoji: "PenTool",
     text: "Ton idéal de Saint-Valentin en 3 mots :",

@@ -152,11 +152,19 @@ export function calculateProfile(
   if (q14 === 1) addScores(scores, { strategique: 3 });
   if (q14 === 2) addScores(scores, { simple: 1, minimaliste: 1 });
 
-  // Q15: Social Media Influence
+  // Q15: Organization (New)
   const q15 = answers[15] as number;
-  if (q15 === 0) addScores(scores, { pression: 3 });
-  if (q15 === 1) addScores(scores, { strategique: 1, reveur: 1 });
-  if (q15 === 2) addScores(scores, { "anti-valentine": 2 });
+  if (q15 === 0) addScores(scores, { pression: 2, strategique: 2 }); // Moi
+  if (q15 === 1) addScores(scores, { simple: 2 }); // Partenaire
+  if (q15 === 2) addScores(scores, { emotionnel: 2, simple: 1 }); // Ensemble
+  if (q15 === 3) addScores(scores, { reveur: 2, "anti-valentine": 1 }); // Impro
+  if (q15 === 4) addScores(scores, { "anti-valentine": 2 }); // Rien
+
+  // Q16: Social Media Influence (Shifted)
+  const q16 = answers[16] as number;
+  if (q16 === 0) addScores(scores, { pression: 3 });
+  if (q16 === 1) addScores(scores, { strategique: 1, reveur: 1 });
+  if (q16 === 2) addScores(scores, { "anti-valentine": 2 });
 
   // Find the top profile
   let maxScore = 0;
