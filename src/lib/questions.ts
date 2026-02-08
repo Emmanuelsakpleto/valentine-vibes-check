@@ -42,7 +42,8 @@ export const questions: Question[] = [
     type: "single",
     options: [
       "Célibataire",
-      "En couple",
+      "En couple (proche)",
+      "En couple (à distance)",
       "C'est compliqué",
       "Marié(e) / Pacsé(e)",
     ],

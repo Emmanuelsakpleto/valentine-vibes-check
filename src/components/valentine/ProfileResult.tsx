@@ -149,16 +149,10 @@ const ProfileResult = ({
             </Button>
           </div>
 
-          <button
-            onClick={onRetake}
-            className="flex items-center gap-1 mx-auto text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors"
-          >
-            <RotateCcw size={12} />
-            Refaire le test
-          </button>
         </div>
       </div>
     </motion.div>
+
   );
 };
 

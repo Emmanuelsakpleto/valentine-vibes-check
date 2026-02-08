@@ -109,3 +109,28 @@
 .animate-float-heart {
   animation: float-heart var(--duration, 15s) var(--delay, 0s) linear infinite;
 }
+
+/* React Country-State-City Overrides */
+.stdropdown-menu {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solidhsl(var(--border)) !important;
+    z-index: 1000 !important;
+}
+
+.stdropdown-menu .stdropdown-item {
+    color: black !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.stdropdown-menu .stdropdown-item:hover {
+    background-color: #f3f4f6 !important; /* gray-100 */
+    color: black !important;
+}
+
+.stdropdown-input input {
+    color: black !important;
+    background-color: white !important;
+    border: 1px solid #e5e7eb !important;
+}

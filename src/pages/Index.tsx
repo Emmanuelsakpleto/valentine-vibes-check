@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import HookScreen from "@/components/valentine/HookScreen";
 import FormVibe from "@/components/valentine/FormVibe";
@@ -14,6 +14,25 @@ const Index = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const saved = localStorage.getItem("valentine_vibe_result");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.profile) {
+          setProfile(parsed.profile);
+          // Verify if answers are needed for Dashboard? 
+          // Currently Dashboard uses Mock Data, so answers are just for Profile calculation.
+          // But good to restore them if we ever use them.
+          if (parsed.answers) setAnswers(parsed.answers);
+          setScreen("results");
+        }
+      } catch (e) {
+        console.error("Failed to load saved result", e);
+      }
+    }
+  }, []);
+
   const handleStart = () => setScreen("form");
 
   const handleFormComplete = (allAnswers: Record<number, number | string>) => {
@@ -22,6 +41,12 @@ const Index = () => {
     setProfile(result);
     setScreen("results");
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Persist result
+    localStorage.setItem("valentine_vibe_result", JSON.stringify({
+      profile: result,
+      answers: allAnswers
+    }));
   };
 
   const handleRetake = () => {
