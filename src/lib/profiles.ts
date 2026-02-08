@@ -105,77 +105,128 @@ export function calculateProfile(
     simple: 0,
   };
 
-  // Q6: Celebrate?
+  // --- LOGIQUE DE SCORING RENFORCÉE ---
+
+  // Q6: Attitude face à la fête
+  // 0: C'est important -> Old School / Rêveur
+  // 1: Occasion de se faire plaisir -> Simple / Émotionnel
+  // 2: Trop commercial -> Anti-Valentine / Minimaliste
+  // 3: Une corvée -> Pression / Anti-Valentine
   const q6 = answers[6] as number;
-  if (q6 === 0) addScores(scores, { "old-school": 3, reveur: 1 });
-  if (q6 === 1) addScores(scores, { simple: 2, emotionnel: 1 });
-  if (q6 === 2) addScores(scores, { "anti-valentine": 3, minimaliste: 1 });
-  if (q6 === 3) addScores(scores, { "anti-valentine": 1, pression: 2 });
+  if (q6 === 0) addScores(scores, { "old-school": 4, reveur: 2, strategique: 1 });
+  if (q6 === 1) addScores(scores, { simple: 4, emotionnel: 3 });
+  if (q6 === 2) addScores(scores, { "anti-valentine": 4, minimaliste: 3 });
+  if (q6 === 3) addScores(scores, { pression: 4, "anti-valentine": 2 });
 
-  // Q7: Importance
+  // Q7: Niveau d'importance (0-4)
+  // 0 (Pas du tout) -> Anti / Minimaliste
+  // 2 (Moyen) -> Simple / Émotionnel
+  // 4 (Vital) -> Old School / Pression / Stratégique
   const q7 = answers[7] as number;
-  if (q7 === 0) addScores(scores, { "anti-valentine": 2, minimaliste: 1 });
-  if (q7 === 1) addScores(scores, { simple: 2 });
-  if (q7 === 2) addScores(scores, { emotionnel: 1 });
-  if (q7 === 3) addScores(scores, { "old-school": 1, strategique: 1 });
-  if (q7 === 4) addScores(scores, { "old-school": 2, pression: 1, reveur: 1 });
+  if (q7 === 0) addScores(scores, { "anti-valentine": 3, minimaliste: 2 });
+  if (q7 === 1) addScores(scores, { simple: 3, minimaliste: 2 });
+  if (q7 === 2) addScores(scores, { simple: 2, emotionnel: 3 });
+  if (q7 === 3) addScores(scores, { "old-school": 2, strategique: 2, reveur: 1 });
+  if (q7 === 4) addScores(scores, { "old-school": 4, pression: 3, strategique: 2 });
 
-  // Q8: Social Pressure
+  // Q8: Pression sociale
+  // 0: Je m'en fiche -> Simple / Anti / Minimaliste
+  // 1: Un peu -> Émotionnel
+  // 2: Beaucoup -> Pression / Stratégique
   const q8 = answers[8] as number;
-  if (q8 === 0) addScores(scores, { pression: 3 });
-  if (q8 === 1) addScores(scores, { pression: 1, strategique: 1 });
-  if (q8 === 2) addScores(scores, { simple: 2, "anti-valentine": 1 });
+  if (q8 === 0) addScores(scores, { simple: 3, "anti-valentine": 2, minimaliste: 2 });
+  if (q8 === 1) addScores(scores, { emotionnel: 2, strategique: 1 });
+  if (q8 === 2) addScores(scores, { pression: 5, strategique: 2 });
 
-  // Q9: Budget
+  // Q9: Budget (0-4)
+  // 0 (0€) -> Anti / Minimaliste
+  // 1 (<50€) -> Simple / Minimaliste
+  // 2 (50-100€) -> Émotionnel / Simple
+  // 3 (100-200€) -> Old School / Stratégique
+  // 4 (>200€) -> Pression / Old School / Rêveur
   const q9 = answers[9] as number;
-  if (q9 === 0) addScores(scores, { "anti-valentine": 2, minimaliste: 2 });
-  if (q9 === 1) addScores(scores, { simple: 1, minimaliste: 1 });
-  if (q9 === 2) addScores(scores, { emotionnel: 1, strategique: 1 });
-  if (q9 === 3) addScores(scores, { "old-school": 2, strategique: 1 });
-  if (q9 === 4) addScores(scores, { "old-school": 1, reveur: 2, pression: 1 });
+  if (q9 === 0) addScores(scores, { "anti-valentine": 4, minimaliste: 3 });
+  if (q9 === 1) addScores(scores, { simple: 3, minimaliste: 3 });
+  if (q9 === 2) addScores(scores, { emotionnel: 2, simple: 2, "old-school": 1 });
+  if (q9 === 3) addScores(scores, { "old-school": 3, strategique: 3 });
+  if (q9 === 4) addScores(scores, { pression: 3, strategique: 2, reveur: 3 });
 
-  // Q10: Gift Type
+  // Q10: Type de cadeau préféré
+  // 0: Expérience -> Rêveur / Émotionnel
+  // 1: Matériel -> Stratégique
+  // 2: Temps/Attention -> Émotionnel / Simple / Minimaliste
+  // 3: Surprise -> Rêveur / Old School
+  // 4: Rien -> Anti / Minimaliste
   const q10 = answers[10] as number;
-  if (q10 === 0) addScores(scores, { reveur: 2, emotionnel: 1 }); // Expérience
-  if (q10 === 1) addScores(scores, { strategique: 2 }); // Matériel
-  if (q10 === 2) addScores(scores, { emotionnel: 2, simple: 1 }); // Temps
-  if (q10 === 3) addScores(scores, { reveur: 3, "old-school": 1 }); // Surprise
-  if (q10 === 4) addScores(scores, { "anti-valentine": 2, minimaliste: 2 }); // Aucun
+  if (q10 === 0) addScores(scores, { reveur: 3, emotionnel: 2 });
+  if (q10 === 1) addScores(scores, { strategique: 4, "old-school": 1 });
+  if (q10 === 2) addScores(scores, { emotionnel: 4, simple: 3, minimaliste: 3 });
+  if (q10 === 3) addScores(scores, { reveur: 3, "old-school": 3 });
+  if (q10 === 4) addScores(scores, { "anti-valentine": 4, minimaliste: 2 });
 
-  // Q12: Financial Stress
+  // Q12: Stress financier (0=Oui, 1=Non)
+  // Oui -> Pression
+  // Non -> Simple / Chill
   const q12 = answers[12] as number;
-  if (q12 === 0) addScores(scores, { pression: 2 });
+  if (q12 === 0) addScores(scores, { pression: 3 });
+  if (q12 === 1) addScores(scores, { simple: 1, minimaliste: 1 });
 
-  // Q14: Surprise Preference
+  // Q14: Organisation / Surprise
+  // 0: J'adore les surprises -> Rêveur
+  // 1: Liste précise -> Stratégique / Pression
+  // 2: On décide ensemble -> Simple / Émotionnel
+  // 3: Aucune prėf -> Chill / Simple
   const q14 = answers[14] as number;
-  if (q14 === 0) addScores(scores, { reveur: 1, emotionnel: 1 });
-  if (q14 === 1) addScores(scores, { strategique: 3 });
-  if (q14 === 2) addScores(scores, { simple: 1, minimaliste: 1 });
+  if (q14 === 0) addScores(scores, { reveur: 3, "old-school": 1 });
+  if (q14 === 1) addScores(scores, { strategique: 4, pression: 2 });
+  if (q14 === 2) addScores(scores, { simple: 5, emotionnel: 2 }); // Grosse signature "Simple"
+  if (q14 === 3) addScores(scores, { simple: 3, minimaliste: 2 });
 
-  // Q15: Organization (New)
+  // Q15: Qui gère l'orga ?
+  // 0: Moi (tout le monde compte sur moi) -> Pression / Stratégique
+  // 1: Mon partenaire -> Chill / Simple
+  // 2: Équipe -> Simple / Émotionnel
+  // 3: Freestyle -> Rêveur / Anti
   const q15 = answers[15] as number;
-  if (q15 === 0) addScores(scores, { pression: 2, strategique: 2 }); // Moi
-  if (q15 === 1) addScores(scores, { simple: 2 }); // Partenaire
-  if (q15 === 2) addScores(scores, { emotionnel: 2, simple: 1 }); // Ensemble
-  if (q15 === 3) addScores(scores, { reveur: 2, "anti-valentine": 1 }); // Impro
-  if (q15 === 4) addScores(scores, { "anti-valentine": 2 }); // Rien
+  if (q15 === 0) addScores(scores, { strategique: 3, pression: 2 });
+  if (q15 === 1) addScores(scores, { simple: 2, minimaliste: 1 });
+  if (q15 === 2) addScores(scores, { simple: 3, emotionnel: 3 });
+  if (q15 === 3) addScores(scores, { reveur: 2, "anti-valentine": 2, simple: 1 });
 
-  // Q16: Social Media Influence (Shifted)
+  // Q16: Influence Réseaux Sociaux
+  // 0: Beaucoup -> Pression / Stratégique
+  // 1: Un peu -> Rêveur
+  // 2: Pas du tout -> Simple / Anti / Minimaliste
   const q16 = answers[16] as number;
-  if (q16 === 0) addScores(scores, { pression: 3 });
-  if (q16 === 1) addScores(scores, { strategique: 1, reveur: 1 });
-  if (q16 === 2) addScores(scores, { "anti-valentine": 2 });
+  if (q16 === 0) addScores(scores, { pression: 5, strategique: 2 });
+  if (q16 === 1) addScores(scores, { reveur: 2, strategique: 1 });
+  if (q16 === 2) addScores(scores, { simple: 2, "anti-valentine": 2, minimaliste: 2 });
+
+  // --- ARBITRAGE FINAL ---
 
   // Find the top profile
-  let maxScore = 0;
+  let maxScore = -1;
   let topProfile: ProfileType = "simple";
-  for (const [key, val] of Object.entries(scores)) {
-    if (val > maxScore) {
-      maxScore = val;
-      topProfile = key as ProfileType;
+
+  // En cas d'égalité, on favorise un ordre de "priorité" pour éviter le hasard total
+  const priorityOrder: ProfileType[] = [
+    "pression", "anti-valentine", "old-school", "strategique", "reveur", "emotionnel", "simple", "minimaliste"
+  ];
+  // Pression est prioritaire car c'est un signal d'alarme important à détecter
+
+  // On check d'abord les scores bruts
+  for (const key of priorityOrder) {
+    if (scores[key] > maxScore) {
+      maxScore = scores[key];
+      topProfile = key;
     }
   }
 
-  // Fallback if tie or 0 (should not happen often)
+  // Petit boost contextuel si égalité ou score très serré
+  // Si Pression et Simple sont proches, mais Budget est Élevé -> Pression gagne
+  if (scores["pression"] >= scores[topProfile] - 2 && q9 >= 3) {
+    topProfile = "pression";
+  }
+
   return profiles[topProfile];
 }
