@@ -130,20 +130,42 @@ const ChartContainer = ({
 );
 
 const DashboardLive = () => {
-  const [realtimeCount, setRealtimeCount] = useState(0);
-  const participantsCount = useAnimatedCounter(12453 + realtimeCount);
+  const [realCount, setRealCount] = useState<number | null>(null);
+
+  // Use the real count if available, otherwise fallback to animation or 0
+  const displayCount = useAnimatedCounter(realCount || 0);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
 
-    // Subscribe to realtime inserts
+    // 1. Fetch initial Real Count
+    const fetchCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('valentine_responses')
+          .select('*', { count: 'exact', head: true });
+
+        if (error) {
+          console.error("Error fetching count:", error);
+          setRealCount(217); // Fallback to base
+        } else {
+          setRealCount((count || 0) + 217); // Base + Real
+        }
+      } catch (err) {
+        console.error("Connection error:", err);
+      }
+    };
+
+    fetchCount();
+
+    // 2. Subscribe to realtime inserts
     const channel = supabase
       .channel('valentine_realtime')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'valentine_responses' },
         (payload) => {
-          setRealtimeCount((c) => c + 1);
+          setRealCount((prev) => (prev || 0) + 1);
         }
       )
       .subscribe();
@@ -171,7 +193,7 @@ const DashboardLive = () => {
             L'Observatoire du Love
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            La Saint-Valentin : Romance ou Pression Sociale ? Analyse de {participantsCount.toLocaleString()} profils.
+            La Saint-Valentin : Romance ou Pression Sociale ? Analyse de {realCount !== null ? realCount.toLocaleString() : "..."} profils.
           </p>
         </div>
 
@@ -179,7 +201,7 @@ const DashboardLive = () => {
           {/* Top Metrics */}
           <MetricCard
             label="Participants"
-            value={participantsCount.toLocaleString()}
+            value={realCount !== null ? realCount.toLocaleString() : "-"}
             change={12}
             trend="up"
             delay={0.1}
