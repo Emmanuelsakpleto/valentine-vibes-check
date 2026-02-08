@@ -84,6 +84,16 @@ const ProfileResult = ({
         scale: 2, // High resolution
         logging: false,
         useCORS: true,
+        onclone: (clonedDoc) => {
+          // Fix text-gradient-valentine glitch in html2canvas
+          // html2canvas doesn't support background-clip: text well -> shows background rect
+          const title = clonedDoc.querySelector('h2');
+          if (title) {
+            title.style.background = 'none';
+            title.style.webkitTextFillColor = 'initial';
+            title.style.color = '#ff4d8d'; // Solid Valentine Pink
+          }
+        }
       });
 
       const blob = await new Promise<Blob | null>((resolve) =>
