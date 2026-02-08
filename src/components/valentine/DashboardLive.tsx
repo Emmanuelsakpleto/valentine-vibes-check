@@ -119,9 +119,11 @@ const ChartContainer = ({
   className?: string;
 }) => (
   <div
-    className={`p-6 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
+    className={`p-6 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden ${className}`}
   >
-    {children}
+    <div className="max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
+      {children}
+    </div>
   </div>
 );
 
@@ -133,7 +135,7 @@ const DashboardLive = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3 }}
-      className="space-y-8 max-w-7xl mx-auto pb-24"
+      className="space-y-8 max-w-7xl mx-auto pb-24 px-4 overflow-hidden"
     >
       {/* Header & Metrics */}
       <div className="space-y-6">
@@ -212,82 +214,102 @@ const DashboardLive = () => {
           </div>
         </div>
 
-        {/* === SECTION 2: DEEP DIVE (3 Columns) === */}
-
-        {/* Column 1: Psychology & Pressure */}
-        <div className="lg:col-span-4 space-y-6">
+        {/* === SECTION 2: MAP & GEOGRAPHY (Full Width) === */}
+        <div className="lg:col-span-12">
           <SectionHeader
-            title="2. Psychologie & Pression"
-            subtitle="Analyse des tensions internes et sociales"
-            icon={<BrainCircuit size={20} />}
+            title="2. Cartographie de la Tendresse"
+            subtitle="Où se trouvent les cœurs les plus ardents ?"
+            icon={<Globe size={20} />}
           />
-          <ChartContainer>
-            <LovePressureIndex />
-          </ChartContainer>
-          <ChartContainer className="h-[300px]">
-            <SentimentCloud />
+          <ChartContainer className="p-0 overflow-hidden border-none h-[400px]">
+            <GeographicMap />
           </ChartContainer>
         </div>
 
-        {/* Column 2: Economics & Gifts */}
-        <div className="lg:col-span-4 space-y-6">
-          <SectionHeader
-            title="3. Économie du Couple"
-            subtitle="Budget, Cadeaux et Matérialisme"
-            icon={<Gift size={20} />}
-          />
-          <ChartContainer>
-            <BudgetAnalysis />
-          </ChartContainer>
-          <ChartContainer>
-            <GiftInsights />
-          </ChartContainer>
+        {/* === SECTION 3 & 4: DEEP DIVE (2 Columns Stacked Layout) === */}
+        <div className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+          {/* Column A: Psychology & Pressure */}
+          <div className="space-y-6">
+            <SectionHeader
+              title="3. Psychologie & Pression"
+              subtitle="Analyse des tensions internes et sociales"
+              icon={<BrainCircuit size={20} />}
+            />
+            <ChartContainer>
+              <LovePressureIndex />
+            </ChartContainer>
+            <ChartContainer>
+              <SentimentCloud />
+            </ChartContainer>
+          </div>
+
+          {/* Column B: Economics & Gifts */}
+          <div className="space-y-6">
+            <SectionHeader
+              title="4. Économie du Couple"
+              subtitle="Budget, Cadeaux et Matérialisme"
+              icon={<Gift size={20} />}
+            />
+            <ChartContainer>
+              <BudgetAnalysis />
+            </ChartContainer>
+            <ChartContainer>
+              <GiftInsights />
+            </ChartContainer>
+          </div>
         </div>
 
-        {/* Column 3: Correlations & Intelligence */}
-        <div className="lg:col-span-4 space-y-6">
+        {/* === SECTION 5: INTELLIGENCE (Full Width) === */}
+        <div className="lg:col-span-12 space-y-6">
           <SectionHeader
-            title="4. Intelligence Relationnelle"
+            title="5. Intelligence Relationnelle"
             subtitle="Corrélations et Insights IA"
             icon={<Share2 size={20} />}
           />
 
-          {/* Correlation Matrix */}
-          <ChartContainer>
-            <CorrelationMatrix />
-          </ChartContainer>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Correlation Matrix */}
+            <ChartContainer>
+              <CorrelationMatrix />
+            </ChartContainer>
 
-          {/* AI Chat / Insight Feed */}
-          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 h-full min-h-[400px] flex flex-col relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
-            <div className="flex items-center gap-2 mb-4">
-              <Lightbulb className="w-4 h-4 text-primary" />
-              <span className="text-xs font-bold uppercase text-primary">Gemini Live Insights</span>
-            </div>
+            {/* AI Chat / Insight Feed */}
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 h-full min-h-[400px] flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
+              <div className="flex items-center gap-2 mb-4">
+                <Lightbulb className="w-4 h-4 text-primary" />
+                <span className="text-xs font-bold uppercase text-primary">Gemini Live Insights</span>
+              </div>
 
-            <ul className="space-y-4 text-sm text-foreground/80 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                <p className="font-semibold text-primary text-xs mb-1">TENDANCE ACTUELLE</p>
-                "Le budget moyen des <span className="font-medium text-foreground">18-24 ans</span> a augmenté de 15% par rapport à l'année dernière."
-              </li>
-              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                <p className="font-semibold text-primary text-xs mb-1">CORRÉLATION DÉTECTÉE</p>
-                "Forte corrélation (0.8) entre l'utilisation de <span className="font-medium text-foreground">TikTok</span> et le sentiment de pression sociale."
-              </li>
-              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                <p className="font-semibold text-primary text-xs mb-1">INSIGHT CADEAUX</p>
-                "Les hommes sous-estiment l'envie d'expériences (voyages/restos) de 25% par rapport aux femmes."
-              </li>
-              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                <p className="font-semibold text-primary text-xs mb-1">MÉTÉO ÉMOTIONNELLE</p>
-                "Pic de nostalgie détecté à Paris à 21h00."
-              </li>
-            </ul>
+              <ul className="space-y-4 text-sm text-foreground/80 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                  <p className="font-semibold text-primary text-xs mb-1">TENDANCE ACTUELLE</p>
+                  "Le budget moyen des <span className="font-medium text-foreground">18-24 ans</span> a augmenté de 15% par rapport à l'année dernière."
+                </li>
+                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                  <p className="font-semibold text-primary text-xs mb-1">CORRÉLATION DÉTECTÉE</p>
+                  "Forte corrélation (0.8) entre l'utilisation de <span className="font-medium text-foreground">TikTok</span> et le sentiment de pression sociale."
+                </li>
+                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                  <p className="font-semibold text-primary text-xs mb-1">INSIGHT CADEAUX</p>
+                  "Les hommes sous-estiment l'envie d'expériences (voyages/restos) de 25% par rapport aux femmes."
+                </li>
+                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                  <p className="font-semibold text-primary text-xs mb-1">DATA GÉOGRAPHIQUE</p>
+                  "<span className="font-medium text-foreground">Paris</span> affiche le 'Love Score' le plus élevé (85/100), mais aussi le budget moyen le plus conséquent (120€)."
+                </li>
+                <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                  <p className="font-semibold text-primary text-xs mb-1">MÉTÉO ÉMOTIONNELLE</p>
+                  "Pic de nostalgie détecté à Paris à 21h00."
+                </li>
+              </ul>
 
-            <div className="mt-4 pt-4 border-t border-primary/10 text-center">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                Mise à jour toutes les 5 sec
-              </p>
+              <div className="mt-4 pt-4 border-t border-primary/10 text-center">
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                  Mise à jour toutes les 5 sec
+                </p>
+              </div>
             </div>
           </div>
         </div>

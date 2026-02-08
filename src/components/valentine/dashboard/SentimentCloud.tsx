@@ -42,7 +42,7 @@ const SentimentCloud = () => {
             </div>
 
             {/* Word Cloud */}
-            <div className="col-span-1 md:col-span-2 relative min-h-[200px] bg-muted/20 rounded-xl p-4 flex flex-wrap justify-center items-center gap-3 overflow-hidden">
+            <div className="col-span-1 md:col-span-2 relative min-h-[200px] max-h-[250px] overflow-y-auto custom-scrollbar bg-muted/20 rounded-xl p-4 flex flex-wrap justify-center items-center gap-3">
                 {words.map((word, i) => (
                     <span
                         key={word.text}
