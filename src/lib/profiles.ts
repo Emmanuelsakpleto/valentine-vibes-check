@@ -137,14 +137,30 @@ export function calculateProfile(
   if (q7 === 3) addScores(scores, { "old-school": 2, strategique: 2, reveur: 1 });
   if (q7 === 4) addScores(scores, { "old-school": 4, pression: 3, strategique: 2 });
 
-  // Q8: Pression sociale
-  // 0: Je m'en fiche -> Simple / Anti / Minimaliste
-  // 1: Un peu -> Émotionnel
-  // 2: Beaucoup -> Pression / Stratégique
+  // Q8: Pression Sociale
+  // 0: Énormément -> Pression
+  // 1: Un peu -> Émotionnel / Stratégique
+  // 2: Pas du tout -> Simple / Anti / Minimaliste
   const q8 = answers[8] as number;
-  if (q8 === 0) addScores(scores, { simple: 3, "anti-valentine": 2, minimaliste: 2 });
+  if (q8 === 0) addScores(scores, { pression: 5, strategique: 2 });
   if (q8 === 1) addScores(scores, { emotionnel: 2, strategique: 1 });
-  if (q8 === 2) addScores(scores, { pression: 5, strategique: 2 });
+  if (q8 === 2) addScores(scores, { simple: 3, "anti-valentine": 2, minimaliste: 2 });
+
+  // Q16: Influence Réseaux (0=Beaucoup, 1=Peu, 2=Non, 3=Néant)
+  const q16 = answers[16] as number;
+  if (q16 === 0) addScores(scores, { pression: 5, strategique: 2 });
+  if (q16 === 1) addScores(scores, { reveur: 2, strategique: 1 });
+  if (q16 >= 2) {
+    scores.pression = -50; // VETO: Pas de réseaux = Pas de pression sociale digitale
+    addScores(scores, { simple: 2, "anti-valentine": 2, minimaliste: 2 });
+  }
+
+  // Q17: Réseau principal (0=Aucun, 1=Instagram, 2=TikTok, 3=Facebook, 4=Snapchat, 5=Autre, 6=Aucune appli)
+  const q17 = answers[17] as number;
+  if (q17 === 6) { // Aucune appli
+    scores.pression = -50;
+    addScores(scores, { "anti-valentine": 2, simple: 2, minimaliste: 2 });
+  }
 
   // Q9: Budget (0-4)
   // 0 (0€) -> Anti / Minimaliste
@@ -201,19 +217,13 @@ export function calculateProfile(
   if (q15 === 2) addScores(scores, { simple: 3, emotionnel: 3 });
   if (q15 === 3) addScores(scores, { reveur: 2, "anti-valentine": 2, simple: 1 });
 
-  // Q16: Influence Réseaux Sociaux
-  // 0: Beaucoup -> Pression / Stratégique
-  // 1: Un peu -> Rêveur
-  // 2: Pas du tout -> Simple / Anti / Minimaliste
-  const q16 = answers[16] as number;
-  if (q16 === 0) addScores(scores, { pression: 5, strategique: 2 });
-  if (q16 === 1) addScores(scores, { reveur: 2, strategique: 1 });
-  if (q16 === 2) addScores(scores, { simple: 2, "anti-valentine": 2, minimaliste: 2 });
+  // Q16 Logic already handled above with veto
 
   // --- ARBITRAGE FINAL ---
+  // Si le score Pression est élevé mais annulé par le veto Q16/Q17, il sera déjà négatif grâce à la pénalité -50.
+  // Cependant, vérifions la cohérence globale.
 
-  // Find the top profile
-  let maxScore = -1;
+  let maxScore = -999;
   let topProfile: ProfileType = "simple";
 
   // En cas d'égalité, on favorise un ordre de "priorité" pour éviter le hasard total
