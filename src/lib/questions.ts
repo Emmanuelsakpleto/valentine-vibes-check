@@ -1,222 +1,214 @@
+import { COUNTRIES } from "@/data/countries";
+
 export interface Question {
   id: number;
   section: string;
   sectionEmoji: string;
   text: string;
-  type: "single" | "text";
+  type: "single" | "text" | "select";
   options?: string[];
 }
 
 export const questions: Question[] = [
-  // SECTION 1 — Ta situation actuelle
+  // SECTION 1 — PROFIL
   {
     id: 1,
-    section: "Ta situation actuelle",
+    section: "Profil",
     sectionEmoji: "Heart",
-    text: "Actuellement, côté cœur tu es plutôt :",
+    text: "Ton genre :",
     type: "single",
-    options: [
-      "Célibataire et tranquille",
-      "Célibataire mais en recherche",
-      "En couple et heureux",
-      "En couple mais… compliqué",
-      "C'est flou même pour moi",
-    ],
+    options: ["Homme", "Femme", "Non-binaire", "Préfère ne pas dire"],
   },
   {
     id: 2,
-    section: "Ta situation actuelle",
+    section: "Profil",
     sectionEmoji: "Heart",
-    text: "Si tu es en couple, ça dure depuis :",
+    text: "Ta tranche d'âge :",
     type: "single",
-    options: [
-      "Moins de 6 mois",
-      "6 mois – 2 ans",
-      "2 – 5 ans",
-      "Plus de 5 ans",
-      "Non concerné",
-    ],
+    options: ["18-24 ans", "25-34 ans", "35-49 ans", "50 ans et +"],
   },
   {
     id: 3,
-    section: "Ta situation actuelle",
+    section: "Profil",
     sectionEmoji: "Heart",
-    text: "Quand tu penses à la Saint-Valentin, tu ressens surtout :",
-    type: "single",
-    options: ["Excitation", "Stress", "Indifférence", "Pression", "Nostalgie"],
+    text: "Ton pays de résidence :",
+    type: "select",
   },
-
-  // SECTION 2 — Vérité sur la Saint-Valentin
   {
     id: 4,
-    section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "HeartCrack",
-    text: "Pour toi, la Saint-Valentin c'est surtout :",
+    section: "Profil",
+    sectionEmoji: "Heart",
+    text: "Ton statut relationnel :",
     type: "single",
     options: [
-      "Une vraie fête romantique",
-      "Une tradition sociale",
-      "Une excuse pour dépenser",
-      "Une journée comme une autre",
-      "Ça dépend avec qui je suis",
+      "Célibataire",
+      "En couple",
+      "C'est compliqué",
+      "Marié(e) / Pacsé(e)",
     ],
   },
   {
     id: 5,
-    section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "HeartCrack",
-    text: "Tu te sens obligé(e) de faire quelque chose ce jour-là ?",
-    type: "single",
-    options: ["Oui clairement", "Parfois", "Pas du tout"],
-  },
-  {
-    id: 6,
-    section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "HeartCrack",
-    text: "Si rien n'est organisé pour toi ce jour-là, tu serais :",
-    type: "single",
-    options: ["Très déçu(e)", "Un peu triste", "Indifférent(e)", "Soulagé(e)"],
-  },
-
-  // SECTION 3 — Cadeaux
-  {
-    id: 7,
-    section: "Cadeaux",
-    sectionEmoji: "Gift",
-    text: "Ton vrai langage amoureux :",
+    section: "Profil",
+    sectionEmoji: "Heart",
+    text: "Durée de la relation (si couple) :",
     type: "single",
     options: [
-      "Recevoir ou offrir des cadeaux",
-      "Passer du temps ensemble",
-      "Les mots et messages",
-      "Les attentions du quotidien",
-      "Le contact et la proximité",
+      "Moins de 6 mois",
+      "6 mois - 2 ans",
+      "2 - 5 ans",
+      "Plus de 5 ans",
+      "Non concerné",
+    ],
+  },
+
+  // SECTION 2 — PERCEPTION VALENTINE
+  {
+    id: 6,
+    section: "Perception Valentine",
+    sectionEmoji: "HeartCrack",
+    text: "Aimes-tu célébrer la Saint-Valentin ?",
+    type: "single",
+    options: [
+      "Oui, j'adore !",
+      "Un peu, pour l'occasion",
+      "Pas du tout",
+      "C'est une corvée commerciale",
+    ],
+  },
+  {
+    id: 7,
+    section: "Perception Valentine",
+    sectionEmoji: "HeartCrack",
+    text: "Quelle importance accordes-tu à cette date (1 à 5) ?",
+    type: "single",
+    options: [
+      "1 - Aucune",
+      "2 - Faible",
+      "3 - Moyenne",
+      "4 - Forte",
+      "5 - Cruciale",
     ],
   },
   {
     id: 8,
-    section: "Cadeaux",
-    sectionEmoji: "Gift",
-    text: "Ton cadeau Valentine idéal :",
+    section: "Perception Valentine",
+    sectionEmoji: "HeartCrack",
+    text: "Ressens-tu une pression sociale autour de cette fête ?",
     type: "single",
-    options: [
-      "Voyage / sortie romantique",
-      "Objet symbolique",
-      "Dîner romantique",
-      "Surprise totale",
-      "Rien, juste être ensemble",
-    ],
+    options: ["Énormément", "Un peu", "Pas du tout"],
   },
+
+  // SECTION 3 — CADEAUX & BUDGET
   {
     id: 9,
-    section: "Cadeaux",
+    section: "Cadeaux & Budget",
     sectionEmoji: "Gift",
-    text: "Budget réaliste Valentine :",
+    text: "Ton budget prévu cette année :",
     type: "single",
     options: [
-      "0 €",
-      "Petit budget (< 30 €)",
-      "Budget moyen (30 – 100 €)",
-      "Gros budget (100 € +)",
-      "Ça dépend de la relation",
+      "0 € (Rien prévu)",
+      "Petit (< 50 €)",
+      "Moyen (50 - 100 €)",
+      "Confortable (100 - 200 €)",
+      "Illimité (200 € +)",
     ],
   },
   {
     id: 10,
-    section: "Cadeaux",
+    section: "Cadeaux & Budget",
     sectionEmoji: "Gift",
-    text: "Réponds honnêtement : As-tu déjà dépassé ton budget pour impressionner quelqu'un ?",
+    text: "Ton type de cadeau préféré :",
     type: "single",
-    options: ["Oui", "Non", "Peut-être…"],
+    options: [
+      "Expérience (Voyage, Resto)",
+      "Objet matériel (Bijou, Tech)",
+      "Temps de qualité ensemble",
+      "Surprise totale",
+      "Aucun cadeau",
+    ],
   },
   {
     id: 11,
-    section: "Cadeaux",
+    section: "Cadeaux & Budget",
     sectionEmoji: "Gift",
-    text: "As-tu déjà fait semblant d'aimer un cadeau ?",
-    type: "single",
-    options: [
-      "Oui et plusieurs fois",
-      "Oui une fois",
-      "Jamais",
-      "Je préfère être honnête",
-    ],
-  },
-
-  // SECTION 4 — Réseaux sociaux
-  {
-    id: 12,
-    section: "Réseaux sociaux",
-    sectionEmoji: "Smartphone",
-    text: "Instagram / TikTok influencent ta vision du romantisme ?",
-    type: "single",
-    options: ["Beaucoup", "Un peu", "Pas du tout"],
-  },
-  {
-    id: 13,
-    section: "Réseaux sociaux",
-    sectionEmoji: "Smartphone",
-    text: "As-tu déjà comparé ta relation à celles que tu vois en ligne ?",
-    type: "single",
-    options: ["Oui", "Parfois", "Jamais"],
-  },
-
-  // SECTION 5 - Vérités que peu avouent
-  {
-    id: 14,
-    section: "Vérités que peu avouent",
-    sectionEmoji: "Lock",
-    text: "Le pire cadeau Valentine que tu pourrais recevoir :",
+    text: "Pour toi, c'est quoi le PIRE cadeau ?",
     type: "single",
     options: [
       "Rien du tout",
-      "Un cadeau impersonnel",
-      "Quelque chose hors budget",
-      "Un message WhatsApp seulement",
-      "Une promesse non tenue",
+      "Un truc 'utile' (électroménager)",
+      "Un truc kitch (nounours géant)",
+      "De l'argent cash",
+      "Une carte cadeau impersonnelle",
     ],
   },
 
+  // SECTION 4 — DIFFICULTÉS & RÉALITÉS
   {
-    id: 15,
-    section: "Vérités que peu avouent",
+    id: 12,
+    section: "Difficultés & Réalités",
     sectionEmoji: "Lock",
-    text: "La chose la plus importante ce jour-là :",
+    text: "As-tu déjà ressenti un stress financier lié à la Saint-Valentin ?",
+    type: "single",
+    options: ["Oui, souvent", "Une fois", "Jamais"],
+  },
+  {
+    id: 13,
+    section: "Difficultés & Réalités",
+    sectionEmoji: "Lock",
+    text: "As-tu déjà reçu un cadeau que tu n'aimais pas ?",
     type: "single",
     options: [
-      "Se sentir aimé(e)",
-      "L'effort fait par l'autre",
-      "Le moment partagé",
-      "Le cadeau",
-      "La tranquillité",
+      "Oui (et j'ai menti)",
+      "Oui (et je l'ai dit)",
+      "Jamais",
+    ],
+  },
+  {
+    id: 14,
+    section: "Difficultés & Réalités",
+    sectionEmoji: "Lock",
+    text: "Préférence : Surprise ou Liste de souhaits ?",
+    type: "single",
+    options: [
+      "J'adore les surprises",
+      "Je donne une liste précise (pas de risque)",
+      "On décide du cadeau ensemble",
     ],
   },
 
-  // SECTION 6 — Storytelling
+  // SECTION 5 — FUN & STORYTELLING
+  {
+    id: 15,
+    section: "Fun & Storytelling",
+    sectionEmoji: "PenTool",
+    text: "Ton cadeau le plus inattendu reçu (ou offert) ?",
+    type: "text",
+  },
   {
     id: 16,
-    section: "Storytelling",
+    section: "Fun & Storytelling",
     sectionEmoji: "PenTool",
-    text: "Ton moment Valentine le plus marquant :",
+    text: "Raconte ta pire (ou meilleure) expérience Valentine :",
     type: "text",
   },
   {
     id: 17,
-    section: "Storytelling",
+    section: "Fun & Storytelling",
     sectionEmoji: "PenTool",
-    text: "Décris ta Saint-Valentin parfaite en une phrase :",
+    text: "Ton idéal de Saint-Valentin en 3 mots :",
     type: "text",
   },
 ];
 
 export const getSectionNumber = (section: string): number => {
   const sections = [
-    "Ta situation actuelle",
-    "Vérité sur la Saint-Valentin",
-    "Cadeaux",
-    "Réseaux sociaux",
-    "Vérités que peu avouent",
-    "Storytelling",
+    "Profil",
+    "Perception Valentine",
+    "Cadeaux & Budget",
+    "Difficultés & Réalités",
+    "Fun & Storytelling",
   ];
-  return sections.indexOf(section) + 1;
+  const index = sections.indexOf(section);
+  return index !== -1 ? index + 1 : 0;
 };

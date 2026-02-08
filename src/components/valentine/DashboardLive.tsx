@@ -148,7 +148,7 @@ const DashboardLive = () => {
             L'Observatoire du Love
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Big Data, Intelligence Artificielle & Sentiments Réels.
+            La Saint-Valentin : Romance ou Pression Sociale ? Analyse de 12 453 profils.
           </p>
         </div>
 
@@ -300,8 +300,8 @@ const DashboardLive = () => {
                   "<span className="font-medium text-foreground">Paris</span> affiche le 'Love Score' le plus élevé (85/100), mais aussi le budget moyen le plus conséquent (120€)."
                 </li>
                 <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
-                  <p className="font-semibold text-primary text-xs mb-1">MÉTÉO ÉMOTIONNELLE</p>
-                  "Pic de nostalgie détecté à Paris à 21h00."
+                  <p className="font-semibold text-primary text-xs mb-1">FUN FACT</p>
+                  "42% des célibataires s'offrent leurs propres chocolats. #SelfLove"
                 </li>
               </ul>
 
