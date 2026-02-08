@@ -124,8 +124,8 @@ export const SOCIAL_IMPACT = {
         { name: "Instagram", pressure: 85, satisfaction: 40 },
         { name: "TikTok", pressure: 75, satisfaction: 55 },
         { name: "Snapchat", pressure: 45, satisfaction: 60 },
-        { name: "Facebook", pressure: 30, satisfaction: 70 },
-        { name: "LinkedIn", pressure: 10, satisfaction: 80 },
+        { name: "Twitter/X", pressure: 65, satisfaction: 30 },
+        { name: "Pinterest", pressure: 20, satisfaction: 90 },
     ],
 };
 
@@ -160,13 +160,15 @@ export const ADVANCED_SCORES = {
 
 export const GEO_DATA = [
     { city: "Paris", lat: 48.8566, lng: 2.3522, score: 85, budget: 120, label: "Capitale du Love" },
-    { city: "Lyon", lat: 45.7640, lng: 4.8357, score: 72, budget: 85, label: "Romantisme Gourmand" },
-    { city: "Marseille", lat: 43.2965, lng: 5.3698, score: 65, budget: 60, label: "Soleil & Passion" },
-    { city: "Bordeaux", lat: 44.8378, lng: -0.5792, score: 78, budget: 95, label: "Vin & Volupté" },
-    { city: "Lille", lat: 50.6292, lng: 3.0573, score: 70, budget: 70, label: "Chaleur du Nord" },
-    { city: "Strasbourg", lat: 48.5734, lng: 7.7521, score: 82, budget: 90, label: "Charme Alsacien" },
-    { city: "Nantes", lat: 47.2184, lng: -1.5536, score: 68, budget: 65, label: "Cœurs à l'Ouest" },
-    { city: "Toulouse", lat: 43.6047, lng: 1.4442, score: 75, budget: 75, label: "Ville Rose" },
+    { city: "New York", lat: 40.7128, lng: -74.0060, score: 92, budget: 180, label: "Big Apple Romance" },
+    { city: "London", lat: 51.5074, lng: -0.1278, score: 78, budget: 110, label: "Royal Vibes" },
+    { city: "Tokyo", lat: 35.6762, lng: 139.6503, score: 65, budget: 95, label: "Chocolats & Obligations" },
+    { city: "Sydney", lat: -33.8688, lng: 151.2093, score: 70, budget: 105, label: "Summer Valentine" },
+    { city: "Rio de Janeiro", lat: -22.9068, lng: -43.1729, score: 88, budget: 60, label: "Passion Tropicale" },
+    { city: "Dubai", lat: 25.2048, lng: 55.2708, score: 80, budget: 250, label: "Luxe & Désert" },
+    { city: "Cape Town", lat: -33.9249, lng: 18.4241, score: 72, budget: 55, label: "Sunset Romance" },
+    { city: "Berlin", lat: 52.5200, lng: 13.4050, score: 55, budget: 70, label: "Techno & Love" },
+    { city: "Abidjan", lat: 5.3600, lng: -4.0083, score: 82, budget: 45, label: "Babi Love" },
 ];
 
 export const REAL_TIME_METRICS: Metric[] = [

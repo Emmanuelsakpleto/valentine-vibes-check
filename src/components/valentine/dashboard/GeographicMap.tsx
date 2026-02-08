@@ -23,8 +23,8 @@ const GeographicMap = () => {
                 Carte de la Pression Amoureuse
             </h4>
             <MapContainer
-                center={[46.603354, 1.888334]}
-                zoom={5.5}
+                center={[20, 0]}
+                zoom={2}
                 scrollWheelZoom={false}
                 className="h-full w-full"
                 style={{ background: '#242424' }}

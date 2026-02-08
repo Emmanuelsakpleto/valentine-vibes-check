@@ -198,9 +198,10 @@ export const questions: Question[] = [
     options: [
       "Instagram (le couple parfait)",
       "TikTok (les trends)",
-      "Pinterest (l'esthétique)",
+      "Snapchat (l'instant)",
       "Twitter / X (les dramas)",
-      "Aucune",
+      "Pinterest (l'esthétique)",
+      "Autre",
     ],
   },
 

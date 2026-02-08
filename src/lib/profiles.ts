@@ -105,92 +105,58 @@ export function calculateProfile(
     simple: 0,
   };
 
-  // Q1: Situation
-  const q1 = answers[1] as number;
-  if (q1 === 0) addScores(scores, { "anti-valentine": 1, simple: 1 });
-  if (q1 === 1) addScores(scores, { reveur: 1, emotionnel: 1 });
-  if (q1 === 2) addScores(scores, { "old-school": 1, simple: 1 });
-  if (q1 === 3) addScores(scores, { pression: 1, emotionnel: 1 });
-  if (q1 === 4) addScores(scores, { reveur: 2 });
-
-  // Q3: Feeling
-  const q3 = answers[3] as number;
-  if (q3 === 0) addScores(scores, { "old-school": 2, emotionnel: 1 });
-  if (q3 === 1) addScores(scores, { pression: 2 });
-  if (q3 === 2) addScores(scores, { "anti-valentine": 2, simple: 1 });
-  if (q3 === 3) addScores(scores, { pression: 2, strategique: 1 });
-  if (q3 === 4) addScores(scores, { reveur: 2, emotionnel: 1 });
-
-  // Q4: What is Valentine's
-  const q4 = answers[4] as number;
-  if (q4 === 0) addScores(scores, { "old-school": 2 });
-  if (q4 === 1) addScores(scores, { strategique: 1, simple: 1 });
-  if (q4 === 2) addScores(scores, { pression: 1, strategique: 1 });
-  if (q4 === 3) addScores(scores, { "anti-valentine": 2 });
-  if (q4 === 4) addScores(scores, { emotionnel: 1, reveur: 1 });
-
-  // Q5: Obligation
-  const q5 = answers[5] as number;
-  if (q5 === 0) addScores(scores, { pression: 3 });
-  if (q5 === 1) addScores(scores, { pression: 1, strategique: 1 });
-  if (q5 === 2) addScores(scores, { "anti-valentine": 1, simple: 1, minimaliste: 1 });
-
-  // Q6: If nothing organized
+  // Q6: Celebrate?
   const q6 = answers[6] as number;
-  if (q6 === 0) addScores(scores, { "old-school": 2, emotionnel: 1 });
-  if (q6 === 1) addScores(scores, { emotionnel: 1, reveur: 1 });
-  if (q6 === 2) addScores(scores, { "anti-valentine": 1, simple: 1, minimaliste: 1 });
-  if (q6 === 3) addScores(scores, { "anti-valentine": 2, minimaliste: 1 });
+  if (q6 === 0) addScores(scores, { "old-school": 3, reveur: 1 });
+  if (q6 === 1) addScores(scores, { simple: 2, emotionnel: 1 });
+  if (q6 === 2) addScores(scores, { "anti-valentine": 3, minimaliste: 1 });
+  if (q6 === 3) addScores(scores, { "anti-valentine": 1, pression: 2 });
 
-  // Q7: Love language
+  // Q7: Importance
   const q7 = answers[7] as number;
-  if (q7 === 0) addScores(scores, { "old-school": 2, strategique: 1 });
-  if (q7 === 1) addScores(scores, { minimaliste: 2, simple: 1 });
-  if (q7 === 2) addScores(scores, { emotionnel: 2, reveur: 1 });
-  if (q7 === 3) addScores(scores, { simple: 2, minimaliste: 1 });
-  if (q7 === 4) addScores(scores, { emotionnel: 1, minimaliste: 1 });
+  if (q7 === 0) addScores(scores, { "anti-valentine": 2, minimaliste: 1 });
+  if (q7 === 1) addScores(scores, { simple: 2 });
+  if (q7 === 2) addScores(scores, { emotionnel: 1 });
+  if (q7 === 3) addScores(scores, { "old-school": 1, strategique: 1 });
+  if (q7 === 4) addScores(scores, { "old-school": 2, pression: 1, reveur: 1 });
 
-  // Q8: Ideal gift
+  // Q8: Social Pressure
   const q8 = answers[8] as number;
-  if (q8 === 0) addScores(scores, { reveur: 2, "old-school": 1 });
-  if (q8 === 1) addScores(scores, { emotionnel: 2, "old-school": 1 });
-  if (q8 === 2) addScores(scores, { "old-school": 2, strategique: 1 });
-  if (q8 === 3) addScores(scores, { reveur: 2, emotionnel: 1 });
-  if (q8 === 4) addScores(scores, { minimaliste: 3, simple: 1 });
+  if (q8 === 0) addScores(scores, { pression: 3 });
+  if (q8 === 1) addScores(scores, { pression: 1, strategique: 1 });
+  if (q8 === 2) addScores(scores, { simple: 2, "anti-valentine": 1 });
 
   // Q9: Budget
   const q9 = answers[9] as number;
-  if (q9 === 0) addScores(scores, { "anti-valentine": 2, minimaliste: 1 });
-  if (q9 === 1) addScores(scores, { simple: 2, minimaliste: 1 });
-  if (q9 === 2) addScores(scores, { strategique: 2 });
-  if (q9 === 3) addScores(scores, { "old-school": 2, pression: 1 });
-  if (q9 === 4) addScores(scores, { strategique: 1, emotionnel: 1 });
+  if (q9 === 0) addScores(scores, { "anti-valentine": 2, minimaliste: 2 });
+  if (q9 === 1) addScores(scores, { simple: 1, minimaliste: 1 });
+  if (q9 === 2) addScores(scores, { emotionnel: 1, strategique: 1 });
+  if (q9 === 3) addScores(scores, { "old-school": 2, strategique: 1 });
+  if (q9 === 4) addScores(scores, { "old-school": 1, reveur: 2, pression: 1 });
 
-  // Q10: Exceeded budget
+  // Q10: Gift Type
   const q10 = answers[10] as number;
-  if (q10 === 0) addScores(scores, { pression: 2, "old-school": 1 });
-  if (q10 === 1) addScores(scores, { simple: 1, minimaliste: 1, "anti-valentine": 1 });
-  if (q10 === 2) addScores(scores, { strategique: 1 });
+  if (q10 === 0) addScores(scores, { reveur: 2, emotionnel: 1 }); // Expérience
+  if (q10 === 1) addScores(scores, { strategique: 2 }); // Matériel
+  if (q10 === 2) addScores(scores, { emotionnel: 2, simple: 1 }); // Temps
+  if (q10 === 3) addScores(scores, { reveur: 3, "old-school": 1 }); // Surprise
+  if (q10 === 4) addScores(scores, { "anti-valentine": 2, minimaliste: 2 }); // Aucun
 
-  // Q12: Social media influence
+  // Q12: Financial Stress
   const q12 = answers[12] as number;
-  if (q12 === 0) addScores(scores, { pression: 3 });
-  if (q12 === 1) addScores(scores, { pression: 1, strategique: 1 });
-  if (q12 === 2) addScores(scores, { "anti-valentine": 1, simple: 1 });
+  if (q12 === 0) addScores(scores, { pression: 2 });
 
-  // Q13: Compared relationship
-  const q13 = answers[13] as number;
-  if (q13 === 0) addScores(scores, { pression: 2, reveur: 1 });
-  if (q13 === 1) addScores(scores, { pression: 1 });
-  if (q13 === 2) addScores(scores, { simple: 1, "anti-valentine": 1 });
+  // Q14: Surprise Preference
+  const q14 = answers[14] as number;
+  if (q14 === 0) addScores(scores, { reveur: 1, emotionnel: 1 });
+  if (q14 === 1) addScores(scores, { strategique: 3 });
+  if (q14 === 2) addScores(scores, { simple: 1, minimaliste: 1 });
 
-  // Q15: Most important
+  // Q15: Social Media Influence
   const q15 = answers[15] as number;
-  if (q15 === 0) addScores(scores, { emotionnel: 3 });
-  if (q15 === 1) addScores(scores, { strategique: 2, "old-school": 1 });
-  if (q15 === 2) addScores(scores, { minimaliste: 2, simple: 1 });
-  if (q15 === 3) addScores(scores, { "old-school": 2 });
-  if (q15 === 4) addScores(scores, { "anti-valentine": 2, minimaliste: 1 });
+  if (q15 === 0) addScores(scores, { pression: 3 });
+  if (q15 === 1) addScores(scores, { strategique: 1, reveur: 1 });
+  if (q15 === 2) addScores(scores, { "anti-valentine": 2 });
 
   // Find the top profile
   let maxScore = 0;
@@ -202,5 +168,6 @@ export function calculateProfile(
     }
   }
 
+  // Fallback if tie or 0 (should not happen often)
   return profiles[topProfile];
 }
