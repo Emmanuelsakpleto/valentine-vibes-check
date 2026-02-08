@@ -4,7 +4,7 @@ import HookScreen from "@/components/valentine/HookScreen";
 import FormVibe from "@/components/valentine/FormVibe";
 import ProfileResult from "@/components/valentine/ProfileResult";
 import DashboardLive from "@/components/valentine/DashboardLive";
-import { calculateProfile, type Profile } from "@/lib/profiles";
+import { calculateProfile, calculateTraits, type Profile, type TraitScores } from "@/lib/profiles";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 type Screen = "hook" | "form" | "results";
@@ -13,6 +13,7 @@ const Index = () => {
   const [screen, setScreen] = useState<Screen>("hook");
   const [answers, setAnswers] = useState<Record<number, number | string>>({});
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [traits, setTraits] = useState<TraitScores | null>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,7 +23,13 @@ const Index = () => {
         const parsed = JSON.parse(saved);
         if (parsed.profile) {
           setProfile(parsed.profile);
-          if (parsed.answers) setAnswers(parsed.answers);
+          if (parsed.answers) {
+            setAnswers(parsed.answers);
+            // Recalculate traits from saved answers if not saved (for backward compat)
+            // or just trust logic. Ideally should save traits too.
+            const t = calculateTraits(parsed.answers);
+            setTraits(t);
+          }
           setScreen("results");
         }
       } catch (e) {
@@ -36,7 +43,9 @@ const Index = () => {
   const handleFormComplete = async (allAnswers: Record<number, number | string>) => {
     setAnswers(allAnswers);
     const result = calculateProfile(allAnswers);
+    const t = calculateTraits(allAnswers);
     setProfile(result);
+    setTraits(t);
     setScreen("results");
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -62,7 +71,7 @@ const Index = () => {
           social_pressure: String(allAnswers[8] || ""),
           budget_range: String(allAnswers[9] || ""),
           gift_preference: String(allAnswers[10] || ""),
-          financial_stress: String(allAnswers[12] || ""), // Q11 is Worst Gift (skipped in cols for now)
+          financial_stress: String(allAnswers[12] || ""),
           social_influence_level: String(allAnswers[16] || ""),
           social_network: String(allAnswers[17] || ""),
         }]);
@@ -97,7 +106,8 @@ const Index = () => {
             <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 space-y-16">
               <ProfileResult
                 profile={profile}
-                onRetake={() => { }} // No-op since button is hidden
+                traits={traits}
+                onRetake={() => { }}
                 onViewDashboard={handleViewDashboard}
               />
 

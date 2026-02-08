@@ -7,10 +7,11 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
-import type { ProfileType } from "@/lib/profiles";
+import type { ProfileType, TraitScores } from "@/lib/profiles";
 
 interface LoveRadarProps {
     profileId: ProfileType;
+    traits?: TraitScores | null;
 }
 
 const profileStats: Record<
@@ -75,8 +76,14 @@ const profileStats: Record<
     ],
 };
 
-const LoveRadar = ({ profileId }: LoveRadarProps) => {
-    const data = profileStats[profileId];
+const LoveRadar = ({ profileId, traits }: LoveRadarProps) => {
+    const data = traits ? [
+        { subject: "Romantisme", A: traits.romantisme, fullMark: 100 },
+        { subject: "Spontanéité", A: traits.spontaneite, fullMark: 100 },
+        { subject: "Effort", A: traits.effort, fullMark: 100 },
+        { subject: "Chill", A: traits.chill, fullMark: 100 },
+        { subject: "Créativité", A: traits.creativite, fullMark: 100 },
+    ] : profileStats[profileId];
 
     return (
         <motion.div

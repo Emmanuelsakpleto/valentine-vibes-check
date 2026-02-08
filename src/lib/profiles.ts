@@ -8,6 +8,14 @@ export type ProfileType =
   | "emotionnel"
   | "simple";
 
+export interface TraitScores {
+  romantisme: number;
+  spontaneite: number;
+  effort: number;
+  chill: number;
+  creativite: number;
+}
+
 export interface Profile {
   id: ProfileType;
   name: string;
@@ -229,4 +237,75 @@ export function calculateProfile(
   }
 
   return profiles[topProfile];
+}
+
+export function calculateTraits(answers: Record<number, number | string>): TraitScores {
+  // Base scores (everyone starts with a bias, e.g. 20-40)
+  let traits = {
+    romantisme: 30,
+    spontaneite: 40,
+    effort: 30,
+    chill: 40,
+    creativite: 20,
+  };
+
+  const add = (t: Partial<TraitScores>) => {
+    for (const [key, val] of Object.entries(t)) {
+      // @ts-ignore
+      traits[key] += val;
+    }
+  };
+
+  // Q6: Attitude
+  const q6 = answers[6] as number;
+  if (q6 === 0) add({ romantisme: 20 }); // Important
+  if (q6 === 1) add({ chill: 20, romantisme: 10 }); // Plaisir
+  if (q6 === 2) add({ chill: 10, effort: -10 }); // Commercial
+  if (q6 === 3) add({ chill: -20, effort: 30 }); // Corvée (effort forcé)
+
+  // Q7: Importance
+  const q7 = answers[7] as number;
+  // 0=Pas du tout ... 4=Vital
+  if (q7 >= 3) add({ romantisme: 20, effort: 20 });
+  if (q7 <= 1) add({ chill: 20, romantisme: -10 });
+
+  // Q8: Pression Sociale
+  const q8 = answers[8] as number;
+  if (q8 === 0) add({ chill: 30 }); // M'en fiche
+  if (q8 === 2) add({ chill: -30, effort: 10 }); // Pression max
+
+  // Q9: Budget
+  const q9 = answers[9] as number;
+  if (q9 === 0) add({ effort: -10, creativite: 10 }); // 0€ -> faut être créatif ou chill
+  if (q9 >= 3) add({ effort: 30, romantisme: 10 }); // Gros budget
+
+  // Q10: Cadeau
+  const q10 = answers[10] as number;
+  if (q10 === 0) add({ creativite: 25, romantisme: 15 }); // Expérience
+  if (q10 === 1) add({ effort: 10, creativite: -10 }); // Matériel
+  if (q10 === 2) add({ romantisme: 20, effort: 10 }); // Temps/Attention
+  if (q10 === 3) add({ spontaneite: 20, romantisme: 15 }); // Surprise
+  if (q10 === 4) add({ chill: 20 }); // Rien
+
+  // Q14: Surprise vs Orga
+  const q14 = answers[14] as number;
+  if (q14 === 0) add({ romantisme: 20, spontaneite: 20 }); // J'adore les surprises
+  if (q14 === 1) add({ effort: 20, spontaneite: -20 }); // Liste précise
+  if (q14 === 2) add({ chill: 10, effort: 10 }); // On décide ensemble
+  if (q14 === 3) add({ chill: 20, spontaneite: 10 }); // Aucune pref
+
+  // Q15: Qui gère
+  const q15 = answers[15] as number;
+  if (q15 === 0) add({ effort: 30 }); // Moi
+  if (q15 === 3) add({ spontaneite: 30, creativite: 10 }); // Freestyle
+
+  // Normalize to 0-100
+  const clamp = (n: number) => Math.min(100, Math.max(0, n));
+  return {
+    romantisme: clamp(traits.romantisme),
+    spontaneite: clamp(traits.spontaneite),
+    effort: clamp(traits.effort),
+    chill: clamp(traits.chill),
+    creativite: clamp(traits.creativite),
+  };
 }

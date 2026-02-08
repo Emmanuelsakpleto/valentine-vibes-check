@@ -23,9 +23,16 @@ import {
   Smile,
   type LucideIcon,
 } from "lucide-react";
-import type { Profile } from "@/lib/profiles";
+import type { Profile, TraitScores } from "@/lib/profiles";
 import { toast } from "sonner";
 import LoveRadar from "./LoveRadar";
+
+interface ProfileResultProps {
+  profile: Profile;
+  traits?: TraitScores | null;
+  onRetake: () => void;
+  onViewDashboard: () => void;
+}
 
 const getIcon = (name: string): LucideIcon | null => {
   switch (name) {
@@ -50,14 +57,9 @@ const getIcon = (name: string): LucideIcon | null => {
   }
 };
 
-interface ProfileResultProps {
-  profile: Profile;
-  onRetake: () => void;
-  onViewDashboard: () => void;
-}
-
 const ProfileResult = ({
   profile,
+  traits,
   onRetake,
   onViewDashboard,
 }: ProfileResultProps) => {
@@ -121,7 +123,7 @@ const ProfileResult = ({
 
           {/* Radar Chart */}
           <div className="py-2">
-            <LoveRadar profileId={profile.id} />
+            <LoveRadar profileId={profile.id} traits={traits} />
           </div>
 
           {/* Description */}
