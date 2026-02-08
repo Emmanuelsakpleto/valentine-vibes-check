@@ -24,7 +24,7 @@ import PerceptionCharts from "./dashboard/PerceptionCharts";
 import GiftInsights from "./dashboard/GiftInsights";
 import CorrelationMatrix from "./dashboard/CorrelationMatrix";
 import AdvancedScores from "./dashboard/AdvancedScores";
-import { GEO_DATA } from "@/data/dashboardData";
+import { GEO_DATA, DEMOGRAPHICS } from "@/data/dashboardData";
 import GeographicMap from "./dashboard/GeographicMap";
 
 function useAnimatedCounter(target: number, duration = 2000) {
@@ -135,6 +135,7 @@ const ChartContainer = ({
 const DashboardLive = () => {
   const [realCount, setRealCount] = useState<number | null>(null);
   const [mapData, setMapData] = useState(GEO_DATA);
+  const [statusData, setStatusData] = useState(DEMOGRAPHICS.status);
 
   // Use the real count if available, otherwise fallback to animation or 0
   const displayCount = useAnimatedCounter(realCount || 0);
@@ -162,36 +163,54 @@ const DashboardLive = () => {
 
     fetchCount();
 
-    // 1b. Fetch existing Country distribution
-    const fetchCountries = async () => {
+    // 1b. Fetch existing Country & Status distribution
+    const fetchExistingData = async () => {
       try {
         const { data, error } = await supabase
           .from('valentine_responses')
-          .select('country');
+          .select('country, status');
 
         if (error) {
-          console.error("Error fetching countries:", error);
+          console.error("Error fetching rows:", error);
         } else if (data) {
-          // Process existing countries
+          // Process existing data
           setMapData(currentData => {
-            const newData = [...currentData]; // Clone
+            const newData = [...currentData];
             data.forEach(row => {
-              if (!row.country) return;
-              const c = row.country;
-              // Find matching location
-              const idx = newData.findIndex(loc => c.includes(loc.country) || loc.country.includes(c));
-              if (idx !== -1) {
-                newData[idx] = { ...newData[idx], count: newData[idx].count + 1 };
+              if (row.country) {
+                const c = row.country;
+                const idx = newData.findIndex(loc => c.includes(loc.country) || loc.country.includes(c));
+                if (idx !== -1) newData[idx] = { ...newData[idx], count: newData[idx].count + 1 };
               }
             });
             return newData;
+          });
+
+          setStatusData(currentStats => {
+            const newStats = [...currentStats];
+            data.forEach(row => {
+              if (row.status) {
+                const s = row.status;
+                let targetName = "";
+                if (s.includes("Célibataire")) targetName = "Célibataire";
+                else if (s.includes("compliqué")) targetName = "C'est compliqué";
+                else if (s.includes("distance")) targetName = "Relation à distance";
+                else if (s.includes("couple")) targetName = "En couple (long terme)"; // Default bucket
+
+                if (targetName) {
+                  const idx = newStats.findIndex(item => item.name === targetName);
+                  if (idx !== -1) newStats[idx] = { ...newStats[idx], value: newStats[idx].value + 1 };
+                }
+              }
+            });
+            return newStats;
           });
         }
       } catch (err) {
         console.error("Connection error:", err);
       }
     };
-    fetchCountries();
+    fetchExistingData();
 
     // 2. Subscribe to realtime inserts
     const channel = supabase
@@ -202,7 +221,7 @@ const DashboardLive = () => {
         (payload) => {
           setRealCount((prev) => (prev || 0) + 1);
 
-          // Update Map Data if country matches
+          // Update Map Data
           const newCountry = payload.new.country;
           if (newCountry) {
             setMapData(prevData =>
@@ -212,6 +231,26 @@ const DashboardLive = () => {
                   : loc
               )
             );
+          }
+
+          // Update Status Data
+          const newStatus = payload.new.status;
+          if (newStatus) {
+            let targetName = "";
+            if (newStatus.includes("Célibataire")) targetName = "Célibataire";
+            else if (newStatus.includes("compliqué")) targetName = "C'est compliqué";
+            else if (newStatus.includes("distance")) targetName = "Relation à distance";
+            else if (newStatus.includes("couple")) targetName = "En couple (long terme)";
+
+            if (targetName) {
+              setStatusData(prevStats =>
+                prevStats.map(item =>
+                  item.name === targetName
+                    ? { ...item, value: item.value + 1 }
+                    : item
+                )
+              );
+            }
           }
         }
       )
@@ -296,7 +335,7 @@ const DashboardLive = () => {
           />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <ChartContainer>
-              <DemographicsCharts />
+              <DemographicsCharts statusData={statusData} />
             </ChartContainer>
             <div className="space-y-6">
               <ChartContainer>

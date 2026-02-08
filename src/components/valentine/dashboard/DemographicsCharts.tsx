@@ -53,11 +53,12 @@ const PieChartCard = ({ title, data }: { title: string; data: any[] }) => (
     </div>
 );
 
-const DemographicsCharts = () => {
+const DemographicsCharts = ({ statusData }: { statusData?: typeof DEMOGRAPHICS.status }) => {
+    const status = statusData || DEMOGRAPHICS.status;
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <PieChartCard title="Genre" data={DEMOGRAPHICS.gender} />
-            <PieChartCard title="Statut Relationnel" data={DEMOGRAPHICS.status} />
+            <PieChartCard title="Statut Relationnel" data={status} />
             <PieChartCard title="Âge" data={DEMOGRAPHICS.age} />
         </div>
     );
