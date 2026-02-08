@@ -161,16 +161,12 @@ export const ADVANCED_SCORES = {
 };
 
 export const GEO_DATA = [
-    { city: "Paris", lat: 48.8566, lng: 2.3522, score: 85, budget: 120, label: "Capitale du Love" },
-    { city: "New York", lat: 40.7128, lng: -74.0060, score: 92, budget: 180, label: "Big Apple Romance" },
-    { city: "London", lat: 51.5074, lng: -0.1278, score: 78, budget: 110, label: "Royal Vibes" },
-    { city: "Tokyo", lat: 35.6762, lng: 139.6503, score: 65, budget: 95, label: "Chocolats & Obligations" },
-    { city: "Sydney", lat: -33.8688, lng: 151.2093, score: 70, budget: 105, label: "Summer Valentine" },
-    { city: "Rio de Janeiro", lat: -22.9068, lng: -43.1729, score: 88, budget: 60, label: "Passion Tropicale" },
-    { city: "Dubai", lat: 25.2048, lng: 55.2708, score: 80, budget: 250, label: "Luxe & Désert" },
-    { city: "Cape Town", lat: -33.9249, lng: 18.4241, score: 72, budget: 55, label: "Sunset Romance" },
-    { city: "Berlin", lat: 52.5200, lng: 13.4050, score: 55, budget: 70, label: "Techno & Love" },
-    { city: "Abidjan", lat: 5.3600, lng: -4.0083, score: 82, budget: 45, label: "Babi Love" },
+    { city: "Lomé", country: "Togo", lat: 6.1319, lng: 1.2228, score: 85, budget: 45, count: 40 },
+    { city: "Ouagadougou", country: "Burkina Faso", lat: 12.3714, lng: -1.5197, score: 78, budget: 35, count: 35 },
+    { city: "Dakar", country: "Sénégal", lat: 14.7167, lng: -17.4677, score: 82, budget: 60, count: 45 },
+    { city: "Abidjan", country: "Côte d'Ivoire", lat: 5.3600, lng: -4.0083, score: 70, budget: 55, count: 50 },
+    { city: "Casablanca", country: "Maroc", lat: 33.5731, lng: -7.5898, score: 65, budget: 80, count: 30 },
+    { city: "Paris", country: "France", lat: 48.8566, lng: 2.3522, score: 55, budget: 120, count: 17 },
 ];
 
 export const REAL_TIME_METRICS: Metric[] = [

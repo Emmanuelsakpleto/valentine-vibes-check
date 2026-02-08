@@ -16,7 +16,9 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const GeographicMap = () => {
+const GeographicMap = ({ liveData }: { liveData?: typeof GEO_DATA }) => {
+    const data = liveData || GEO_DATA;
+
     return (
         <div className="h-[400px] w-full rounded-xl overflow-hidden border border-border relative z-0">
             <h4 className="absolute top-4 right-4 z-[400] bg-background/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-primary shadow-sm uppercase tracking-wider">
@@ -35,7 +37,7 @@ const GeographicMap = () => {
                     url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                 />
 
-                {GEO_DATA.map((location, idx) => (
+                {data.map((location, idx) => (
                     <CircleMarker
                         key={idx}
                         center={[location.lat, location.lng]}
@@ -50,8 +52,12 @@ const GeographicMap = () => {
                         <Popup className="custom-popup">
                             <div className="p-2 text-center">
                                 <h3 className="font-bold text-lg text-foreground">{location.city}</h3>
-                                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">{location.label}</p>
+                                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">{location.country}</p>
                                 <div className="space-y-1 text-sm">
+                                    <div className="flex justify-between gap-4">
+                                        <span>Participants:</span>
+                                        <span className="font-bold text-primary">{location.count}</span>
+                                    </div>
                                     <div className="flex justify-between gap-4">
                                         <span>Pression:</span>
                                         <span className="font-bold text-primary">{location.score}/100</span>

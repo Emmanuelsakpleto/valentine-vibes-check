@@ -24,6 +24,7 @@ import PerceptionCharts from "./dashboard/PerceptionCharts";
 import GiftInsights from "./dashboard/GiftInsights";
 import CorrelationMatrix from "./dashboard/CorrelationMatrix";
 import AdvancedScores from "./dashboard/AdvancedScores";
+import { GEO_DATA } from "@/data/dashboardData";
 import GeographicMap from "./dashboard/GeographicMap";
 
 function useAnimatedCounter(target: number, duration = 2000) {
@@ -129,8 +130,11 @@ const ChartContainer = ({
   </div>
 );
 
+
+
 const DashboardLive = () => {
   const [realCount, setRealCount] = useState<number | null>(null);
+  const [mapData, setMapData] = useState(GEO_DATA);
 
   // Use the real count if available, otherwise fallback to animation or 0
   const displayCount = useAnimatedCounter(realCount || 0);
@@ -166,6 +170,18 @@ const DashboardLive = () => {
         { event: 'INSERT', schema: 'public', table: 'valentine_responses' },
         (payload) => {
           setRealCount((prev) => (prev || 0) + 1);
+
+          // Update Map Data if country matches
+          const newCountry = payload.new.country;
+          if (newCountry) {
+            setMapData(prevData =>
+              prevData.map(loc =>
+                (newCountry.includes(loc.country) || loc.country.includes(newCountry))
+                  ? { ...loc, count: loc.count + 1 }
+                  : loc
+              )
+            );
+          }
         }
       )
       .subscribe();
@@ -267,7 +283,7 @@ const DashboardLive = () => {
             icon={<Globe size={20} />}
           />
           <ChartContainer className="p-0 overflow-hidden border-none h-[400px]">
-            <GeographicMap />
+            <GeographicMap liveData={mapData} />
           </ChartContainer>
         </div>
 
