@@ -162,6 +162,37 @@ const DashboardLive = () => {
 
     fetchCount();
 
+    // 1b. Fetch existing Country distribution
+    const fetchCountries = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('valentine_responses')
+          .select('country');
+
+        if (error) {
+          console.error("Error fetching countries:", error);
+        } else if (data) {
+          // Process existing countries
+          setMapData(currentData => {
+            const newData = [...currentData]; // Clone
+            data.forEach(row => {
+              if (!row.country) return;
+              const c = row.country;
+              // Find matching location
+              const idx = newData.findIndex(loc => c.includes(loc.country) || loc.country.includes(c));
+              if (idx !== -1) {
+                newData[idx] = { ...newData[idx], count: newData[idx].count + 1 };
+              }
+            });
+            return newData;
+          });
+        }
+      } catch (err) {
+        console.error("Connection error:", err);
+      }
+    };
+    fetchCountries();
+
     // 2. Subscribe to realtime inserts
     const channel = supabase
       .channel('valentine_realtime')
