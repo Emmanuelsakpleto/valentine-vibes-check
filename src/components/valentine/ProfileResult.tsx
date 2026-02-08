@@ -144,7 +144,7 @@ const ProfileResult = ({
         {/* Glow behind card */}
         <div className="absolute inset-0 bg-glow-valentine-sm pointer-events-none opacity-80" />
 
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 space-y-4">
           {/* Header Branding (Visible on share image) */}
           <p className="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-medium">
             VALENTINE VIBES CHECK 2026
@@ -161,7 +161,7 @@ const ProfileResult = ({
 
           {/* Name & Tagline */}
           <div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-gradient-valentine mb-2">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-gradient-valentine mb-1 leading-none py-1">
               {profile.name}
             </h2>
             <p className="font-display text-lg italic text-foreground/80">
