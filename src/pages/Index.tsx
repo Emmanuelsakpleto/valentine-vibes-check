@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Frown } from "lucide-react";
 import HookScreen from "@/components/valentine/HookScreen";
 import FormVibe from "@/components/valentine/FormVibe";
 import ProfileResult from "@/components/valentine/ProfileResult";
@@ -118,6 +119,11 @@ const Index = () => {
           </div>
         )}
       </AnimatePresence>
+
+      <footer className="py-8 text-center text-xs text-muted-foreground/30 flex items-center justify-center gap-2 pointer-events-none">
+        <span>Développée pour comprendre mon ex</span>
+        <Frown size={14} />
+      </footer>
     </main>
   );
 };
