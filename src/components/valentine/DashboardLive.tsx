@@ -1,75 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  PieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
-import { Zap, Heart, CreditCard, Sparkles, Lightbulb } from "lucide-react";
+  Users,
+  Activity,
+  Heart,
+  TrendingUp,
+  BrainCircuit,
+  PieChart as PieChartIcon,
+  Lightbulb,
+  Gift,
+  Share2,
+  Globe,
+} from "lucide-react";
 
-const COLORS = {
-  rose: "#dc3c78",
-  lightRose: "#fd79a8",
-  coral: "#e17055",
-  red: "#d63031",
-  gray: "#636e72",
-  gold: "#e2a042",
-  purple: "#a29bfe",
-  teal: "#00b894",
-};
-
-const emotionData = [
-  { name: "Excitation", value: 24, fill: COLORS.rose },
-  { name: "Stress", value: 21, fill: COLORS.coral },
-  { name: "Indifférence", value: 19, fill: COLORS.gray },
-  { name: "Pression", value: 22, fill: COLORS.red },
-  { name: "Nostalgie", value: 14, fill: COLORS.lightRose },
-];
-
-const loveLanguageData = [
-  { name: "Cadeaux", value: 18, fill: COLORS.gold },
-  { name: "Temps", value: 28, fill: COLORS.rose },
-  { name: "Mots", value: 20, fill: COLORS.purple },
-  { name: "Attentions", value: 22, fill: COLORS.teal },
-  { name: "Contact", value: 12, fill: COLORS.lightRose },
-];
-
-const budgetData = [
-  { name: "0 €", value: 15, fill: COLORS.gray },
-  { name: "< 30 €", value: 28, fill: COLORS.teal },
-  { name: "30-100 €", value: 32, fill: COLORS.rose },
-  { name: "100 € +", value: 12, fill: COLORS.gold },
-  { name: "Ça dépend", value: 13, fill: COLORS.purple },
-];
-
-const demoInsights = [
-  "La majorité ressent plus de pression que d'excitation à l'approche du 14 février.",
-  "« Juste être ensemble » revient dans 34% des réponses sur le cadeau idéal.",
-  "Les réseaux sociaux amplifient les attentes chez 43% des répondants.",
-];
-
-const wordCloudWords = [
-  { text: "ensemble", size: 28 },
-  { text: "calme", size: 20 },
-  { text: "dîner", size: 22 },
-  { text: "surprise", size: 18 },
-  { text: "voyage", size: 24 },
-  { text: "maison", size: 16 },
-  { text: "rire", size: 20 },
-  { text: "musique", size: 14 },
-  { text: "simplicité", size: 22 },
-  { text: "étoiles", size: 16 },
-  { text: "bougie", size: 18 },
-  { text: "câlin", size: 20 },
-  { text: "plage", size: 14 },
-  { text: "cinéma", size: 16 },
-];
+// Components
+import DemographicsCharts from "./dashboard/DemographicsCharts";
+import BudgetAnalysis from "./dashboard/BudgetAnalysis";
+import LovePressureIndex from "./dashboard/LovePressureIndex";
+import SentimentCloud from "./dashboard/SentimentCloud";
+import PerceptionCharts from "./dashboard/PerceptionCharts";
+import GiftInsights from "./dashboard/GiftInsights";
+import CorrelationMatrix from "./dashboard/CorrelationMatrix";
+import AdvancedScores from "./dashboard/AdvancedScores";
+import GeographicMap from "./dashboard/GeographicMap";
 
 function useAnimatedCounter(target: number, duration = 2000) {
   const [value, setValue] = useState(0);
@@ -96,242 +49,252 @@ function useAnimatedCounter(target: number, duration = 2000) {
   return value;
 }
 
-const ChartCard = ({
-  title,
+const MetricCard = ({
+  label,
+  value,
+  change,
+  trend,
   icon,
-  children,
   delay = 0,
 }: {
-  title: string;
+  label: string;
+  value: string | number;
+  change?: number;
+  trend?: "up" | "down" | "neutral";
   icon?: React.ReactNode;
-  children: React.ReactNode;
   delay?: number;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.5 }}
-    className="rounded-xl border border-border bg-card p-5"
+    transition={{ delay, duration: 0.4 }}
+    className="p-4 rounded-xl border border-border bg-card/50 backdrop-blur-sm"
   >
-    <div className="flex items-center gap-2 mb-4">
-      {icon}
-      <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+    <div className="flex justify-between items-start mb-2">
+      <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+        {label}
+      </span>
+      {icon && <div className="text-primary/60">{icon}</div>}
     </div>
-    {children}
+    <div className="flex items-end gap-2">
+      <span className="text-2xl font-bold tabular-nums">{value}</span>
+      {change && (
+        <span
+          className={`text-xs font-medium mb-1 ${trend === "up" ? "text-green-500" : "text-red-500"
+            }`}
+        >
+          {change > 0 ? "+" : ""}
+          {change}%
+        </span>
+      )}
+    </div>
   </motion.div>
 );
 
-const CustomTooltip = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-lg">
-        <span className="font-medium">{payload[0].name || payload[0].payload.name}</span>
-        <span className="ml-2 text-primary">{payload[0].value}%</span>
-      </div>
-    );
-  }
-  return null;
-};
+const SectionHeader = ({
+  title,
+  subtitle,
+  icon,
+}: {
+  title: string;
+  subtitle?: string;
+  icon?: React.ReactNode;
+}) => (
+  <div className="flex items-center gap-3 mb-6 mt-12 bg-gradient-to-r from-background to-muted/20 p-2 rounded-lg border-b border-border/50">
+    <div className="p-2 rounded-lg bg-primary/10 text-primary">
+      {icon || <Activity size={20} />}
+    </div>
+    <div>
+      <h3 className="text-lg font-bold font-display">{title}</h3>
+      {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+    </div>
+  </div>
+);
+
+const ChartContainer = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`p-6 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
+  >
+    {children}
+  </div>
+);
 
 const DashboardLive = () => {
-  const count = useAnimatedCounter(247);
-  const [currentInsight, setCurrentInsight] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentInsight((prev) => (prev + 1) % demoInsights.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const participantsCount = useAnimatedCounter(12453);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3 }}
-      className="space-y-8"
+      className="space-y-8 max-w-7xl mx-auto pb-24"
     >
-      {/* Section title */}
-      <div className="text-center space-y-2">
-        <p className="text-xs uppercase tracking-widest text-muted-foreground">
-          Dashboard live
-        </p>
-        <h2 className="font-display text-2xl font-bold text-foreground">
-          Ce que disent les autres
-        </h2>
-      </div>
-
-      {/* Counter */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, type: "spring" }}
-        className="text-center py-6 rounded-xl border border-primary/10 bg-card"
-      >
-        <span className="text-5xl md:text-6xl font-bold text-gradient-valentine tabular-nums">
-          {count}
-        </span>
-        <p className="text-muted-foreground text-sm mt-2">
-          personnes ont partagé leur vérité
-        </p>
-      </motion.div>
-
-      {/* Charts grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Emotions */}
-        <ChartCard
-          title="Émotions dominantes"
-          icon={<Zap size={16} className="text-primary" />}
-          delay={0.6}
-        >
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={emotionData} layout="vertical">
-              <XAxis type="number" hide />
-              <YAxis
-                type="category"
-                dataKey="name"
-                width={80}
-                tick={{ fill: "hsl(260, 8%, 55%)", fontSize: 11 }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={18}>
-                {emotionData.map((entry, index) => (
-                  <Cell key={index} fill={entry.fill} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        {/* Love language */}
-        <ChartCard
-          title="Langages amoureux"
-          icon={<Heart size={16} className="text-primary" />}
-          delay={0.7}
-        >
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie
-                data={loveLanguageData}
-                cx="50%"
-                cy="50%"
-                innerRadius={50}
-                outerRadius={80}
-                paddingAngle={3}
-                dataKey="value"
-              >
-                {loveLanguageData.map((entry, index) => (
-                  <Cell key={index} fill={entry.fill} />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="flex flex-wrap gap-2 justify-center mt-2">
-            {loveLanguageData.map((item) => (
-              <span
-                key={item.name}
-                className="text-[10px] text-muted-foreground flex items-center gap-1"
-              >
-                <span
-                  className="w-2 h-2 rounded-full inline-block"
-                  style={{ backgroundColor: item.fill }}
-                />
-                {item.name}
-              </span>
-            ))}
-          </div>
-        </ChartCard>
-
-        {/* Budget */}
-        <ChartCard
-          title="Budget Valentine"
-          icon={<CreditCard size={16} className="text-primary" />}
-          delay={0.8}
-        >
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={budgetData}>
-              <XAxis
-                dataKey="name"
-                tick={{ fill: "hsl(260, 8%, 55%)", fontSize: 10 }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis hide />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" radius={[6, 6, 0, 0]} barSize={28}>
-                {budgetData.map((entry, index) => (
-                  <Cell key={index} fill={entry.fill} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        {/* Word cloud */}
-        <ChartCard
-          title="En un mot"
-          icon={<Sparkles size={16} className="text-primary" />}
-          delay={0.9}
-        >
-          <div className="flex flex-wrap gap-2 justify-center items-center min-h-[180px] py-4">
-            {wordCloudWords.map((word, i) => (
-              <motion.span
-                key={word.text}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1 + i * 0.05 }}
-                className="text-foreground/70 hover:text-primary transition-colors cursor-default"
-                style={{
-                  fontSize: `${word.size}px`,
-                  fontFamily: word.size > 20 ? '"Playfair Display", serif' : undefined,
-                }}
-              >
-                {word.text}
-              </motion.span>
-            ))}
-          </div>
-        </ChartCard>
-      </div>
-
-      {/* Live insights */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-        className="rounded-xl border border-primary/10 bg-card p-6 space-y-3"
-      >
-        <div className="flex items-center gap-2">
-          <Lightbulb className="w-4 h-4 text-primary animate-pulse" />
-          <h3 className="text-sm font-medium text-foreground">
-            Live Insights
-          </h3>
+      {/* Header & Metrics */}
+      <div className="space-y-6">
+        <div className="text-center space-y-2 mb-8">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-medium uppercase tracking-wider animate-pulse">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Live Hub 2026
+          </span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+            L'Observatoire du Love
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Big Data, Intelligence Artificielle & Sentiments Réels.
+          </p>
         </div>
-        <AnimatedInsight text={demoInsights[currentInsight]} />
 
-        <p className="text-[10px] text-muted-foreground/40 italic">
-          Analyse en continu par IA
-        </p>
-      </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Top Metrics */}
+          <MetricCard
+            label="Participants"
+            value={participantsCount}
+            change={12}
+            trend="up"
+            delay={0.1}
+            icon={<Users size={16} />}
+          />
+          <MetricCard
+            label="Love Pressure"
+            value="68/100"
+            change={5.4}
+            trend="up"
+            delay={0.2}
+            icon={<Activity size={16} />}
+          />
+          <MetricCard
+            label="Budget Moyen"
+            value="54 €"
+            change={-2.5}
+            trend="down"
+            delay={0.3}
+            icon={<TrendingUp size={16} />}
+          />
+          <MetricCard
+            label="Auth. Score"
+            value="64/100"
+            trend="neutral"
+            delay={0.4}
+            icon={<Heart size={16} />}
+          />
+        </div>
+
+        {/* Advanced Composite Scores (New Row) */}
+        <AdvancedScores />
+
+      </div>
+
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        {/* === SECTION 1: DEMOGRAPHICS & PERCEPTION (Full Width) === */}
+        <div className="lg:col-span-12">
+          <SectionHeader
+            title="1. Radiographie de la Cohorte"
+            subtitle="Qui aime (ou déteste) la Saint-Valentin en 2026 ?"
+            icon={<Users size={20} />}
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <ChartContainer>
+              <DemographicsCharts />
+            </ChartContainer>
+            <div className="space-y-6">
+              <ChartContainer>
+                <PerceptionCharts />
+              </ChartContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* === SECTION 2: DEEP DIVE (3 Columns) === */}
+
+        {/* Column 1: Psychology & Pressure */}
+        <div className="lg:col-span-4 space-y-6">
+          <SectionHeader
+            title="2. Psychologie & Pression"
+            subtitle="Analyse des tensions internes et sociales"
+            icon={<BrainCircuit size={20} />}
+          />
+          <ChartContainer>
+            <LovePressureIndex />
+          </ChartContainer>
+          <ChartContainer className="h-[300px]">
+            <SentimentCloud />
+          </ChartContainer>
+        </div>
+
+        {/* Column 2: Economics & Gifts */}
+        <div className="lg:col-span-4 space-y-6">
+          <SectionHeader
+            title="3. Économie du Couple"
+            subtitle="Budget, Cadeaux et Matérialisme"
+            icon={<Gift size={20} />}
+          />
+          <ChartContainer>
+            <BudgetAnalysis />
+          </ChartContainer>
+          <ChartContainer>
+            <GiftInsights />
+          </ChartContainer>
+        </div>
+
+        {/* Column 3: Correlations & Intelligence */}
+        <div className="lg:col-span-4 space-y-6">
+          <SectionHeader
+            title="4. Intelligence Relationnelle"
+            subtitle="Corrélations et Insights IA"
+            icon={<Share2 size={20} />}
+          />
+
+          {/* Correlation Matrix */}
+          <ChartContainer>
+            <CorrelationMatrix />
+          </ChartContainer>
+
+          {/* AI Chat / Insight Feed */}
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 h-full min-h-[400px] flex flex-col relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
+            <div className="flex items-center gap-2 mb-4">
+              <Lightbulb className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold uppercase text-primary">Gemini Live Insights</span>
+            </div>
+
+            <ul className="space-y-4 text-sm text-foreground/80 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                <p className="font-semibold text-primary text-xs mb-1">TENDANCE ACTUELLE</p>
+                "Le budget moyen des <span className="font-medium text-foreground">18-24 ans</span> a augmenté de 15% par rapport à l'année dernière."
+              </li>
+              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                <p className="font-semibold text-primary text-xs mb-1">CORRÉLATION DÉTECTÉE</p>
+                "Forte corrélation (0.8) entre l'utilisation de <span className="font-medium text-foreground">TikTok</span> et le sentiment de pression sociale."
+              </li>
+              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                <p className="font-semibold text-primary text-xs mb-1">INSIGHT CADEAUX</p>
+                "Les hommes sous-estiment l'envie d'expériences (voyages/restos) de 25% par rapport aux femmes."
+              </li>
+              <li className="bg-background/80 p-3 rounded-lg border border-border shadow-sm">
+                <p className="font-semibold text-primary text-xs mb-1">MÉTÉO ÉMOTIONNELLE</p>
+                "Pic de nostalgie détecté à Paris à 21h00."
+              </li>
+            </ul>
+
+            <div className="mt-4 pt-4 border-t border-primary/10 text-center">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                Mise à jour toutes les 5 sec
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </motion.div>
   );
 };
-
-function AnimatedInsight({ text }: { text: string }) {
-  return (
-    <motion.p
-      key={text}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.4 }}
-      className="text-muted-foreground italic text-sm leading-relaxed"
-    >
-      "{text}"
-    </motion.p>
-  );
-}
 
 export default DashboardLive;

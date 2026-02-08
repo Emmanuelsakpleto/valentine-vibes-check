@@ -2,8 +2,50 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { questions, getSectionNumber } from "@/lib/questions";
 import QuestionCard from "./QuestionCard";
-import { ArrowLeft } from "lucide-react";
-import { Icons, type IconName } from "@/lib/icons";
+import {
+  ArrowLeft,
+  Heart,
+  Flower,
+  Target,
+  Ghost,
+  Smartphone,
+  Sparkles,
+  CloudMoon,
+  Zap,
+  Sun,
+  Gift,
+  HeartCrack,
+  MessageCircle,
+  PenTool,
+  Lock,
+  Frown,
+  Meh,
+  Smile,
+  type LucideIcon,
+} from "lucide-react";
+
+const getIcon = (name: string): LucideIcon | null => {
+  switch (name) {
+    case "Heart": return Heart;
+    case "Rose": return Flower;
+    case "Target": return Target;
+    case "Ghost": return Ghost;
+    case "Smartphone": return Smartphone;
+    case "Sparkles": return Sparkles;
+    case "CloudMoon": return CloudMoon;
+    case "Zap": return Zap;
+    case "Sun": return Sun;
+    case "Gift": return Gift;
+    case "HeartCrack": return HeartCrack;
+    case "MessageCircle": return MessageCircle;
+    case "PenTool": return PenTool;
+    case "Lock": return Lock;
+    case "Frown": return Frown;
+    case "Meh": return Meh;
+    case "Smile": return Smile;
+    default: return null;
+  }
+};
 
 interface FormVibeProps {
   onComplete: (answers: Record<number, number | string>) => void;
@@ -34,7 +76,7 @@ const FormVibe = ({ onComplete }: FormVibeProps) => {
   const question = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
   const sectionNum = getSectionNumber(question.section);
-  const SectionIcon = Icons[question.sectionEmoji as IconName];
+  const SectionIcon = getIcon(question.sectionEmoji);
 
   const advance = useCallback(
     (newAnswers: Record<number, number | string>) => {

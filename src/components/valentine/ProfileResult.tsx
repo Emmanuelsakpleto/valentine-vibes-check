@@ -1,10 +1,54 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Share2, RotateCcw, BarChart3 } from "lucide-react";
+import {
+  Share2,
+  RotateCcw,
+  BarChart3,
+  Heart,
+  Flower,
+  Target,
+  Ghost,
+  Smartphone,
+  Sparkles,
+  CloudMoon,
+  Zap,
+  Sun,
+  Gift,
+  HeartCrack,
+  MessageCircle,
+  PenTool,
+  Lock,
+  Frown,
+  Meh,
+  Smile,
+  type LucideIcon,
+} from "lucide-react";
 import type { Profile } from "@/lib/profiles";
 import { toast } from "sonner";
-import { Icons, type IconName } from "@/lib/icons";
 import LoveRadar from "./LoveRadar";
+
+const getIcon = (name: string): LucideIcon | null => {
+  switch (name) {
+    case "Heart": return Heart;
+    case "Rose": return Flower;
+    case "Target": return Target;
+    case "Ghost": return Ghost;
+    case "Smartphone": return Smartphone;
+    case "Sparkles": return Sparkles;
+    case "CloudMoon": return CloudMoon;
+    case "Zap": return Zap;
+    case "Sun": return Sun;
+    case "Gift": return Gift;
+    case "HeartCrack": return HeartCrack;
+    case "MessageCircle": return MessageCircle;
+    case "PenTool": return PenTool;
+    case "Lock": return Lock;
+    case "Frown": return Frown;
+    case "Meh": return Meh;
+    case "Smile": return Smile;
+    default: return null;
+  }
+};
 
 interface ProfileResultProps {
   profile: Profile;
@@ -17,7 +61,7 @@ const ProfileResult = ({
   onRetake,
   onViewDashboard,
 }: ProfileResultProps) => {
-  const Icon = Icons[profile.emoji as IconName];
+  const Icon = getIcon(profile.emoji);
 
   const handleShare = async () => {
     const text = `Mon profil Valentine : ${profile.name} — "${profile.tagline}"\n\nDécouvre le tien 👇`;
