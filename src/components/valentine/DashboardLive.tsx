@@ -12,7 +12,7 @@ import {
   Share2,
   Globe,
 } from "lucide-react";
-import { toast } from "sonner";
+
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 // Components
@@ -144,10 +144,6 @@ const DashboardLive = () => {
         { event: 'INSERT', schema: 'public', table: 'valentine_responses' },
         (payload) => {
           setRealtimeCount((c) => c + 1);
-          const country = payload.new.country || "un nouvel endroit";
-          toast("Nouveau profil détecté !", {
-            description: `Quelqu'un vient de participer depuis ${country}.`
-          });
         }
       )
       .subscribe();

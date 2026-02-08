@@ -141,6 +141,7 @@ export const questions: Question[] = [
       "Un truc kitch (nounours géant)",
       "De l'argent cash",
       "Une carte cadeau impersonnelle",
+      "Autre",
     ],
   },
 
@@ -175,6 +176,7 @@ export const questions: Question[] = [
       "J'adore les surprises",
       "Je donne une liste précise (pas de risque)",
       "On décide du cadeau ensemble",
+      "Aucune préférence",
     ],
   },
   {
@@ -217,6 +219,7 @@ export const questions: Question[] = [
       "Twitter / X (les dramas)",
       "Pinterest (l'esthétique)",
       "Autre",
+      "Aucune",
     ],
   },
 
