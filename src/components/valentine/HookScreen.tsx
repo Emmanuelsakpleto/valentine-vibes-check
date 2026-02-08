@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Heart } from "lucide-react";
 
 interface HookScreenProps {
   onStart: () => void;
@@ -10,9 +11,10 @@ const floatingHearts = Array.from({ length: 12 }, (_, i) => ({
   left: `${5 + Math.random() * 90}%`,
   duration: `${12 + Math.random() * 18}s`,
   delay: `${Math.random() * 10}s`,
-  size: `${14 + Math.random() * 18}px`,
+  size: 14 + Math.random() * 18,
 }));
 
+// ... (container and item variants remain the same)
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -41,19 +43,18 @@ const HookScreen = ({ onStart }: HookScreenProps) => {
       {/* Floating hearts */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {floatingHearts.map((heart) => (
-          <span
+          <motion.div
             key={heart.id}
             className="absolute text-primary/20 animate-float-heart select-none"
             style={{
               left: heart.left,
-              fontSize: heart.size,
               "--duration": heart.duration,
               "--delay": heart.delay,
-              bottom: "-20px",
-            } as React.CSSProperties}
+              bottom: "-40px",
+            } as any}
           >
-            ♥
-          </span>
+            <Heart size={heart.size} fill="currentColor" />
+          </motion.div>
         ))}
       </div>
 
@@ -94,8 +95,8 @@ const HookScreen = ({ onStart }: HookScreenProps) => {
             Réponds à ce test et découvre :
           </p>
           <div className="flex flex-col gap-2 text-left max-w-xs mx-auto">
-            <span className="text-foreground/80">
-              ❤️ Ton profil amoureux
+            <span className="text-foreground/80 flex items-center gap-2">
+              <Heart size={14} className="text-primary inline" /> Ton profil amoureux
             </span>
             <span className="text-foreground/80">
               💸 Ton niveau de pression Valentine
@@ -114,7 +115,7 @@ const HookScreen = ({ onStart }: HookScreenProps) => {
             onClick={onStart}
             className="mt-4"
           >
-            Commencer le test ❤️
+            Commencer le test <Heart size={16} className="ml-2 fill-current" />
           </Button>
           <p className="text-muted-foreground/60 text-xs mt-4">
             100% anonyme · 2 min · pas de cookies

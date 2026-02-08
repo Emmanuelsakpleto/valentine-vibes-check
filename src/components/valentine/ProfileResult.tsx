@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Share2, RotateCcw, BarChart3 } from "lucide-react";
 import type { Profile } from "@/lib/profiles";
 import { toast } from "sonner";
+import { Icons, type IconName } from "@/lib/icons";
+import LoveRadar from "./LoveRadar";
 
 interface ProfileResultProps {
   profile: Profile;
@@ -15,8 +17,10 @@ const ProfileResult = ({
   onRetake,
   onViewDashboard,
 }: ProfileResultProps) => {
+  const Icon = Icons[profile.emoji as IconName];
+
   const handleShare = async () => {
-    const text = `Mon profil Valentine : ${profile.emoji} ${profile.name} — "${profile.tagline}"\n\nDécouvre le tien 👇`;
+    const text = `Mon profil Valentine : ${profile.name} — "${profile.tagline}"\n\nDécouvre le tien 👇`;
 
     if (navigator.share) {
       try {
@@ -47,13 +51,13 @@ const ProfileResult = ({
         <div className="absolute inset-0 bg-glow-valentine-sm pointer-events-none" />
 
         <div className="relative z-10 space-y-6">
-          {/* Emoji */}
+          {/* Emoji / Icon */}
           <motion.div
-            className="text-7xl md:text-8xl"
+            className="flex justify-center"
             animate={{ rotate: [0, 8, -8, 0] }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {profile.emoji}
+            {Icon && <Icon className="w-24 h-24 text-primary" strokeWidth={1.5} />}
           </motion.div>
 
           {/* Label */}
@@ -70,6 +74,11 @@ const ProfileResult = ({
           <p className="font-display text-lg italic text-foreground/70">
             "{profile.tagline}"
           </p>
+
+          {/* Radar Chart */}
+          <div className="py-2">
+            <LoveRadar profileId={profile.id} />
+          </div>
 
           {/* Description */}
           <p className="text-sm text-muted-foreground leading-relaxed">

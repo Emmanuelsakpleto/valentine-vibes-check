@@ -12,7 +12,7 @@ export const questions: Question[] = [
   {
     id: 1,
     section: "Ta situation actuelle",
-    sectionEmoji: "💝",
+    sectionEmoji: "Heart",
     text: "Actuellement, côté cœur tu es plutôt :",
     type: "single",
     options: [
@@ -26,7 +26,7 @@ export const questions: Question[] = [
   {
     id: 2,
     section: "Ta situation actuelle",
-    sectionEmoji: "💝",
+    sectionEmoji: "Heart",
     text: "Si tu es en couple, ça dure depuis :",
     type: "single",
     options: [
@@ -40,7 +40,7 @@ export const questions: Question[] = [
   {
     id: 3,
     section: "Ta situation actuelle",
-    sectionEmoji: "💝",
+    sectionEmoji: "Heart",
     text: "Quand tu penses à la Saint-Valentin, tu ressens surtout :",
     type: "single",
     options: ["Excitation", "Stress", "Indifférence", "Pression", "Nostalgie"],
@@ -50,7 +50,7 @@ export const questions: Question[] = [
   {
     id: 4,
     section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "💔",
+    sectionEmoji: "HeartCrack",
     text: "Pour toi, la Saint-Valentin c'est surtout :",
     type: "single",
     options: [
@@ -64,7 +64,7 @@ export const questions: Question[] = [
   {
     id: 5,
     section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "💔",
+    sectionEmoji: "HeartCrack",
     text: "Tu te sens obligé(e) de faire quelque chose ce jour-là ?",
     type: "single",
     options: ["Oui clairement", "Parfois", "Pas du tout"],
@@ -72,7 +72,7 @@ export const questions: Question[] = [
   {
     id: 6,
     section: "Vérité sur la Saint-Valentin",
-    sectionEmoji: "💔",
+    sectionEmoji: "HeartCrack",
     text: "Si rien n'est organisé pour toi ce jour-là, tu serais :",
     type: "single",
     options: ["Très déçu(e)", "Un peu triste", "Indifférent(e)", "Soulagé(e)"],
@@ -82,7 +82,7 @@ export const questions: Question[] = [
   {
     id: 7,
     section: "Cadeaux",
-    sectionEmoji: "🎁",
+    sectionEmoji: "Gift",
     text: "Ton vrai langage amoureux :",
     type: "single",
     options: [
@@ -96,7 +96,7 @@ export const questions: Question[] = [
   {
     id: 8,
     section: "Cadeaux",
-    sectionEmoji: "🎁",
+    sectionEmoji: "Gift",
     text: "Ton cadeau Valentine idéal :",
     type: "single",
     options: [
@@ -110,7 +110,7 @@ export const questions: Question[] = [
   {
     id: 9,
     section: "Cadeaux",
-    sectionEmoji: "🎁",
+    sectionEmoji: "Gift",
     text: "Budget réaliste Valentine :",
     type: "single",
     options: [
@@ -124,19 +124,19 @@ export const questions: Question[] = [
   {
     id: 10,
     section: "Cadeaux",
-    sectionEmoji: "🎁",
+    sectionEmoji: "Gift",
     text: "Réponds honnêtement : As-tu déjà dépassé ton budget pour impressionner quelqu'un ?",
     type: "single",
-    options: ["Oui 😅", "Non 😌", "Peut-être… 👀"],
+    options: ["Oui", "Non", "Peut-être…"],
   },
   {
     id: 11,
     section: "Cadeaux",
-    sectionEmoji: "🎁",
+    sectionEmoji: "Gift",
     text: "As-tu déjà fait semblant d'aimer un cadeau ?",
     type: "single",
     options: [
-      "Oui et plusieurs fois 🎭",
+      "Oui et plusieurs fois",
       "Oui une fois",
       "Jamais",
       "Je préfère être honnête",
@@ -147,39 +147,40 @@ export const questions: Question[] = [
   {
     id: 12,
     section: "Réseaux sociaux",
-    sectionEmoji: "📱",
+    sectionEmoji: "Smartphone",
     text: "Instagram / TikTok influencent ta vision du romantisme ?",
     type: "single",
-    options: ["Beaucoup 📲", "Un peu", "Pas du tout 🚫"],
+    options: ["Beaucoup", "Un peu", "Pas du tout"],
   },
   {
     id: 13,
     section: "Réseaux sociaux",
-    sectionEmoji: "📱",
+    sectionEmoji: "Smartphone",
     text: "As-tu déjà comparé ta relation à celles que tu vois en ligne ?",
     type: "single",
-    options: ["Oui 😬", "Parfois", "Jamais"],
+    options: ["Oui", "Parfois", "Jamais"],
   },
 
-  // SECTION 5 — Vérités que peu avouent
+  // SECTION 5 - Vérités que peu avouent
   {
     id: 14,
     section: "Vérités que peu avouent",
-    sectionEmoji: "🤫",
+    sectionEmoji: "Lock",
     text: "Le pire cadeau Valentine que tu pourrais recevoir :",
     type: "single",
     options: [
       "Rien du tout",
       "Un cadeau impersonnel",
       "Quelque chose hors budget",
-      "Un message WhatsApp seulement 💀",
+      "Un message WhatsApp seulement",
       "Une promesse non tenue",
     ],
   },
+
   {
     id: 15,
     section: "Vérités que peu avouent",
-    sectionEmoji: "🤫",
+    sectionEmoji: "Lock",
     text: "La chose la plus importante ce jour-là :",
     type: "single",
     options: [
@@ -195,14 +196,14 @@ export const questions: Question[] = [
   {
     id: 16,
     section: "Storytelling",
-    sectionEmoji: "✍️",
+    sectionEmoji: "PenTool",
     text: "Ton moment Valentine le plus marquant :",
     type: "text",
   },
   {
     id: 17,
     section: "Storytelling",
-    sectionEmoji: "✍️",
+    sectionEmoji: "PenTool",
     text: "Décris ta Saint-Valentin parfaite en une phrase :",
     type: "text",
   },

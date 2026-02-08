@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { questions, getSectionNumber } from "@/lib/questions";
 import QuestionCard from "./QuestionCard";
 import { ArrowLeft } from "lucide-react";
+import { Icons, type IconName } from "@/lib/icons";
 
 interface FormVibeProps {
   onComplete: (answers: Record<number, number | string>) => void;
@@ -33,6 +34,7 @@ const FormVibe = ({ onComplete }: FormVibeProps) => {
   const question = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
   const sectionNum = getSectionNumber(question.section);
+  const SectionIcon = Icons[question.sectionEmoji as IconName];
 
   const advance = useCallback(
     (newAnswers: Record<number, number | string>) => {
@@ -100,7 +102,7 @@ const FormVibe = ({ onComplete }: FormVibeProps) => {
               transition={{ duration: 0.2 }}
               className="mb-8 flex items-center gap-2"
             >
-              <span className="text-lg">{question.sectionEmoji}</span>
+              {SectionIcon && <SectionIcon className="w-6 h-6 text-primary" />}
               <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
                 Section {sectionNum} — {question.section}
               </span>

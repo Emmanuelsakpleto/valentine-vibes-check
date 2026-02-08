@@ -1,0 +1,42 @@
+import {
+    Heart,
+    Rose,
+    Target,
+    Ghost,
+    Smartphone,
+    Sparkles,
+    CloudMoon,
+    Zap,
+    Sun,
+    Gift,
+    HeartCrack,
+    MessageCircle,
+    PenTool,
+    Lock,
+    Frown,
+    Meh,
+    Smile,
+    type LucideIcon,
+} from "lucide-react";
+
+export const Icons: Record<string, LucideIcon> = {
+    Heart,
+    Rose,
+    Target,
+    Ghost,
+    Smartphone,
+    Sparkles,
+    CloudMoon,
+    Zap,
+    Sun,
+    Gift,
+    HeartCrack,
+    MessageCircle,
+    PenTool,
+    Lock,
+    Frown,
+    Meh,
+    Smile,
+};
+
+export type IconName = keyof typeof Icons;

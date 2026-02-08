@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { Zap, Heart, CreditCard, Sparkles, Lightbulb } from "lucide-react";
 
 const COLORS = {
   rose: "#dc3c78",
@@ -97,10 +98,12 @@ function useAnimatedCounter(target: number, duration = 2000) {
 
 const ChartCard = ({
   title,
+  icon,
   children,
   delay = 0,
 }: {
   title: string;
+  icon?: React.ReactNode;
   children: React.ReactNode;
   delay?: number;
 }) => (
@@ -110,7 +113,10 @@ const ChartCard = ({
     transition={{ delay, duration: 0.5 }}
     className="rounded-xl border border-border bg-card p-5"
   >
-    <h3 className="text-sm font-medium text-muted-foreground mb-4">{title}</h3>
+    <div className="flex items-center gap-2 mb-4">
+      {icon}
+      <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+    </div>
     {children}
   </motion.div>
 );
@@ -173,7 +179,11 @@ const DashboardLive = () => {
       {/* Charts grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Emotions */}
-        <ChartCard title="😤 Émotions dominantes" delay={0.6}>
+        <ChartCard
+          title="Émotions dominantes"
+          icon={<Zap size={16} className="text-primary" />}
+          delay={0.6}
+        >
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={emotionData} layout="vertical">
               <XAxis type="number" hide />
@@ -196,7 +206,11 @@ const DashboardLive = () => {
         </ChartCard>
 
         {/* Love language */}
-        <ChartCard title="💕 Langages amoureux" delay={0.7}>
+        <ChartCard
+          title="Langages amoureux"
+          icon={<Heart size={16} className="text-primary" />}
+          delay={0.7}
+        >
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
@@ -232,7 +246,11 @@ const DashboardLive = () => {
         </ChartCard>
 
         {/* Budget */}
-        <ChartCard title="💸 Budget Valentine" delay={0.8}>
+        <ChartCard
+          title="Budget Valentine"
+          icon={<CreditCard size={16} className="text-primary" />}
+          delay={0.8}
+        >
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={budgetData}>
               <XAxis
@@ -253,7 +271,11 @@ const DashboardLive = () => {
         </ChartCard>
 
         {/* Word cloud */}
-        <ChartCard title="✨ Saint-Valentin parfaite en un mot" delay={0.9}>
+        <ChartCard
+          title="En un mot"
+          icon={<Sparkles size={16} className="text-primary" />}
+          delay={0.9}
+        >
           <div className="flex flex-wrap gap-2 justify-center items-center min-h-[180px] py-4">
             {wordCloudWords.map((word, i) => (
               <motion.span
@@ -282,12 +304,13 @@ const DashboardLive = () => {
         className="rounded-xl border border-primary/10 bg-card p-6 space-y-3"
       >
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <Lightbulb className="w-4 h-4 text-primary animate-pulse" />
           <h3 className="text-sm font-medium text-foreground">
-            💡 Live Insights
+            Live Insights
           </h3>
         </div>
         <AnimatedInsight text={demoInsights[currentInsight]} />
+
         <p className="text-[10px] text-muted-foreground/40 italic">
           Analyse en continu par IA
         </p>

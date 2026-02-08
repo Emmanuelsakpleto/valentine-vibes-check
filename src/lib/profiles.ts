@@ -20,7 +20,7 @@ export const profiles: Record<ProfileType, Profile> = {
   "old-school": {
     id: "old-school",
     name: "Lover Old School",
-    emoji: "🌹",
+    emoji: "Rose",
     tagline: "Le romantisme, c'est un art de vivre.",
     description:
       "Tu crois aux grandes déclarations, aux roses rouges et aux dîners aux chandelles. La Saint-Valentin, c'est sacré pour toi. Tu assumes pleinement et tu fais les choses en grand.",
@@ -28,7 +28,7 @@ export const profiles: Record<ProfileType, Profile> = {
   strategique: {
     id: "strategique",
     name: "Romantique Stratégique",
-    emoji: "🎯",
+    emoji: "Target",
     tagline: "L'amour, c'est aussi de l'organisation.",
     description:
       "Tu planifies tout : le resto, le cadeau, le timing parfait. Rien n'est laissé au hasard. Tu veux que tout soit impeccable parce que l'effort, c'est ta façon d'aimer.",
@@ -36,7 +36,7 @@ export const profiles: Record<ProfileType, Profile> = {
   "anti-valentine": {
     id: "anti-valentine",
     name: "Anti-Valentine Discret",
-    emoji: "😎",
+    emoji: "Ghost",
     tagline: "L'amour ne se commande pas au calendrier.",
     description:
       "La Saint-Valentin ? Très peu pour toi. Tu préfères montrer ton amour au quotidien, pas quand le marketing te le dicte. Et tu assumes totalement.",
@@ -44,7 +44,7 @@ export const profiles: Record<ProfileType, Profile> = {
   pression: {
     id: "pression",
     name: "Lover Pression Sociale",
-    emoji: "📱",
+    emoji: "Smartphone",
     tagline: "Entre ce que tu veux et ce qu'on attend de toi…",
     description:
       "Tu ressens la pression : les stories Instagram parfaites, les attentes de l'autre, le budget qui explose… Tu fais souvent les choses plus par obligation que par envie. Respire.",
@@ -52,7 +52,7 @@ export const profiles: Record<ProfileType, Profile> = {
   minimaliste: {
     id: "minimaliste",
     name: "Lover Minimaliste",
-    emoji: "✨",
+    emoji: "Sparkles",
     tagline: "Moins c'est plus. Surtout en amour.",
     description:
       "Pas besoin de grands gestes ni de cadeaux extravagants. Un câlin, un film, un moment à deux — c'est ta définition du bonheur. Simple mais sincère.",
@@ -60,7 +60,7 @@ export const profiles: Record<ProfileType, Profile> = {
   reveur: {
     id: "reveur",
     name: "Lover Rêveur",
-    emoji: "🦋",
+    emoji: "CloudMoon",
     tagline: "La réalité est belle, mais l'imaginaire l'est encore plus.",
     description:
       "Tu idéalises l'amour, tu imagines des scénarios dignes d'un film. La réalité ne suit pas toujours, mais tu continues de rêver. Et c'est ce qui te rend unique.",
@@ -68,7 +68,7 @@ export const profiles: Record<ProfileType, Profile> = {
   emotionnel: {
     id: "emotionnel",
     name: "Lover Émotionnel",
-    emoji: "💫",
+    emoji: "Zap",
     tagline: "Les sentiments avant tout, toujours.",
     description:
       "Ce qui compte pour toi, c'est l'émotion brute, la sincérité, le cœur qui bat. Un regard, un mot juste, un geste vrai — ça vaut tous les cadeaux du monde.",
@@ -76,7 +76,7 @@ export const profiles: Record<ProfileType, Profile> = {
   simple: {
     id: "simple",
     name: "Lover Simple",
-    emoji: "☀️",
+    emoji: "Sun",
     tagline: "L'amour n'a pas besoin d'être compliqué.",
     description:
       "Pas de drama, pas de prise de tête. L'amour c'est simple pour toi et ça devrait le rester. Tu profites des bons moments sans te stresser.",
