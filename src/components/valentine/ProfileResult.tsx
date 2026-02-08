@@ -160,7 +160,7 @@ const ProfileResult = ({
           </motion.div>
 
           {/* Name & Tagline */}
-          <div>
+          <div className="-mt-8">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-gradient-valentine mb-1 leading-none py-1">
               {profile.name}
             </h2>
