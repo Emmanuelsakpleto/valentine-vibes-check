@@ -23,9 +23,10 @@ export const DEMOGRAPHICS = {
         { name: "Non-binaire/Autre", value: 4, fill: "#a29bfe" },
     ],
     status: [
-        { name: "Célibataire", value: 32, fill: "#fd79a8" },
-        { name: "En couple (récent)", value: 18, fill: "#e17055" },
-        { name: "En couple (long terme)", value: 45, fill: "#d63031" },
+        { name: "Célibataire", value: 30, fill: "#fd79a8" },
+        { name: "En couple (récent)", value: 15, fill: "#e17055" },
+        { name: "En couple (long terme)", value: 35, fill: "#d63031" },
+        { name: "Relation à distance", value: 15, fill: "#a29bfe" }, // Matches Q4 option
         { name: "C'est compliqué", value: 5, fill: "#636e72" },
     ],
     age: [
@@ -66,6 +67,7 @@ export const BUDGET_INSIGHTS = {
         { status: "Célibataire", avg: 25 },
         { status: "Couple récent", avg: 65 },
         { status: "Couple long", avg: 90 },
+        { status: "Distance", avg: 75 }, // Added LDR context
         { status: "Compliqué", avg: 15 },
     ],
 };
@@ -96,10 +98,10 @@ export const PERCEPTION_DATA = {
         { name: "À la folie", value: 15, fill: "#dc3c78" },
     ],
     attitude: [
-        { name: "Occasion Romantique", value: 45, fill: "#dc3c78" },
-        { name: "Corvée Commerciale", value: 30, fill: "#636e72" },
-        { name: "Pression Sociale", value: 15, fill: "#d63031" },
-        { name: "Excuse pour faire la fête", value: 10, fill: "#fdcb6e" },
+        { name: "Amoureux de l'Amour", value: 45, fill: "#dc3c78" }, // J'adore
+        { name: "Sceptiques Commerciaux", value: 30, fill: "#636e72" }, // Corvée
+        { name: "Indifférents", value: 15, fill: "#d63031" }, // Pas du tout
+        { name: "Suiveurs d'Occasion", value: 10, fill: "#fdcb6e" }, // Un peu
     ],
 };
 
