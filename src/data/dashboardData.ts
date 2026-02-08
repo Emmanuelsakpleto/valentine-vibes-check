@@ -167,6 +167,9 @@ export const GEO_DATA = [
     { city: "Abidjan", country: "Côte d'Ivoire", lat: 5.3600, lng: -4.0083, score: 70, budget: 55, count: 50 },
     { city: "Casablanca", country: "Maroc", lat: 33.5731, lng: -7.5898, score: 65, budget: 80, count: 30 },
     { city: "Paris", country: "France", lat: 48.8566, lng: 2.3522, score: 55, budget: 120, count: 17 },
+    { city: "New Delhi", country: "India", lat: 28.6139, lng: 77.2090, score: 60, budget: 30, count: 0 },
+    { city: "Dhaka", country: "Bangladesh", lat: 23.8103, lng: 90.4125, score: 55, budget: 25, count: 0 },
+    { city: "Kabul", country: "Afghanistan", lat: 34.5553, lng: 69.2075, score: 40, budget: 15, count: 0 },
 ];
 
 export const REAL_TIME_METRICS: Metric[] = [
