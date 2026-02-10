@@ -99,6 +99,15 @@ const addScores = (scores: Scores, additions: Partial<Scores>) => {
   }
 };
 
+import { questions } from "./questions";
+
+const getIndex = (qId: number, answer: string | number): number => {
+  if (typeof answer === 'number') return answer;
+  const q = questions.find(q => q.id === qId);
+  if (!q || !q.options) return -1;
+  return q.options.indexOf(answer as string);
+};
+
 export function calculateProfile(
   answers: Record<number, number | string>
 ): Profile {
@@ -120,7 +129,7 @@ export function calculateProfile(
   // 1: Occasion de se faire plaisir -> Simple / Émotionnel
   // 2: Trop commercial -> Anti-Valentine / Minimaliste
   // 3: Une corvée -> Pression / Anti-Valentine
-  const q6 = answers[6] as number;
+  const q6 = getIndex(6, answers[6]);
   if (q6 === 0) addScores(scores, { "old-school": 5, reveur: 3, strategique: 2 });
   if (q6 === 1) addScores(scores, { simple: 2, emotionnel: 3 });
   if (q6 === 2) addScores(scores, { "anti-valentine": 5, minimaliste: 3 });
@@ -128,9 +137,11 @@ export function calculateProfile(
 
   // Q7: Niveau d'importance (0-4)
   // 0 (Pas du tout) -> Anti / Minimaliste
+  // 1 (Peu) -> Simple / Minimaliste
   // 2 (Moyen) -> Simple / Émotionnel
+  // 3 (Important) -> Old School / Stratégique / Rêveur
   // 4 (Vital) -> Old School / Pression / Stratégique
-  const q7 = answers[7] as number;
+  const q7 = getIndex(7, answers[7]);
   if (q7 === 0) addScores(scores, { "anti-valentine": 3, minimaliste: 3 });
   if (q7 === 1) addScores(scores, { simple: 2, minimaliste: 2 });
   if (q7 === 2) addScores(scores, { simple: 1, emotionnel: 3 });
@@ -141,13 +152,13 @@ export function calculateProfile(
   // 0: Énormément -> Pression
   // 1: Un peu -> Émotionnel / Stratégique
   // 2: Pas du tout -> Simple / Anti / Minimaliste
-  const q8 = answers[8] as number;
+  const q8 = getIndex(8, answers[8]);
   if (q8 === 0) addScores(scores, { pression: 6, strategique: 2 });
   if (q8 === 1) addScores(scores, { emotionnel: 2, strategique: 1 });
   if (q8 === 2) addScores(scores, { simple: 2, "anti-valentine": 2, minimaliste: 2 });
 
   // Q16: Influence Réseaux (0=Beaucoup, 1=Peu, 2=Non, 3=Néant)
-  const q16 = answers[16] as number;
+  const q16 = getIndex(16, answers[16]);
   if (q16 === 0) addScores(scores, { pression: 5, strategique: 2 });
   if (q16 === 1) addScores(scores, { reveur: 2, strategique: 1 });
   if (q16 >= 2) {
@@ -156,7 +167,7 @@ export function calculateProfile(
   }
 
   // Q17: Réseau principal (0=Aucun, 1=Instagram, 2=TikTok, 3=Facebook, 4=Snapchat, 5=Autre, 6=Aucune appli)
-  const q17 = answers[17] as number;
+  const q17 = getIndex(17, answers[17]);
   if (q17 === 6) { // Aucune appli
     scores.pression = -50;
     addScores(scores, { "anti-valentine": 2, simple: 2, minimaliste: 2 });
@@ -168,7 +179,7 @@ export function calculateProfile(
   // 2 (50-100€) -> Émotionnel / Simple
   // 3 (100-200€) -> Old School / Stratégique
   // 4 (>200€) -> Pression / Old School / Rêveur
-  const q9 = answers[9] as number;
+  const q9 = getIndex(9, answers[9]);
   if (q9 === 0) addScores(scores, { "anti-valentine": 4, minimaliste: 3 });
   if (q9 === 1) addScores(scores, { simple: 3, minimaliste: 3 });
   if (q9 === 2) addScores(scores, { emotionnel: 2, simple: 2, "old-school": 1 });
@@ -176,7 +187,7 @@ export function calculateProfile(
   if (q9 === 4) addScores(scores, { pression: 3, strategique: 2, reveur: 3 });
 
   // Q10: Type de cadeau préféré (LE CHOIX DU COEUR - Poids X2)
-  const q10 = answers[10] as number;
+  const q10 = getIndex(10, answers[10]);
   if (q10 === 0) addScores(scores, { reveur: 8, emotionnel: 4, "old-school": 2 }); // Expérience
   if (q10 === 1) addScores(scores, { strategique: 8, pression: 2 }); // Matériel
   if (q10 === 2) addScores(scores, { emotionnel: 6, simple: 4, minimaliste: 3 }); // Temps/Attention
@@ -184,19 +195,19 @@ export function calculateProfile(
   if (q10 === 4) addScores(scores, { "anti-valentine": 6, minimaliste: 5, simple: 2 }); // Rien
 
   // Q12: Stress financier (0=Oui, 1=Non)
-  const q12 = answers[12] as number;
+  const q12 = getIndex(12, answers[12]);
   if (q12 === 0) addScores(scores, { pression: 3 });
   if (q12 === 1) addScores(scores, { simple: 1, minimaliste: 1 });
 
   // Q14: Organisation / Surprise (PREF PERSO - Poids X2)
-  const q14 = answers[14] as number;
+  const q14 = getIndex(14, answers[14]);
   if (q14 === 0) addScores(scores, { reveur: 8, "old-school": 2 }); // J'adore les surprises !
   if (q14 === 1) addScores(scores, { strategique: 8, pression: 3, "old-school": 1 }); // Liste précise
   if (q14 === 2) addScores(scores, { simple: 5, emotionnel: 5 }); // On décide ensemble
   if (q14 === 3) addScores(scores, { simple: 2, minimaliste: 4, "anti-valentine": 2 }); // Aucune pref
 
   // Q15: Qui gère l'orga ? (ROLE DANS LE GROUPE)
-  const q15 = answers[15] as number;
+  const q15 = getIndex(15, answers[15]);
   if (q15 === 0) addScores(scores, { strategique: 6, pression: 3, "old-school": 2 }); // Tout repose sur moi
   if (q15 === 1) addScores(scores, { simple: 3, minimaliste: 3, reveur: 2 }); // Mon partenaire/Les autres
   if (q15 === 2) addScores(scores, { simple: 4, emotionnel: 4 }); // Équipe
